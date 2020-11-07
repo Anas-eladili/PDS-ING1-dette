@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import common.ConvertJSON;
 
+
 import common.RetractableBollard;
 
 public class BollardDAO extends DAO<RetractableBollard>{
@@ -67,7 +68,7 @@ public class BollardDAO extends DAO<RetractableBollard>{
 		RetractableBollard bollard = converter.JsonToBollard(device);
 
 		try {
-			preparedStatement = connection.prepareStatement("UPDATE retractablebollard SET address = ?, isActive = ?, state = ?,way = ? WHERE id = ?");
+			preparedStatement = connection.prepareStatement("UPDATE retractablebollard SET address = ?, isActive = ?, state = ?, way = ? WHERE id = ?");
 			
 			preparedStatement.setInt(1, bollard.getId());
 			preparedStatement.setString(2, bollard.getAddress());
@@ -133,7 +134,32 @@ public class BollardDAO extends DAO<RetractableBollard>{
 
 	@Override
 	public ArrayList<String> selectID(String id, Connection connection) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		ArrayList<String> list = new ArrayList<String>();
+		int idBollard = Integer.valueOf(id);
+
+		try {
+			Statement myRequest = connection.createStatement();
+			ResultSet result = myRequest.executeQuery("SELECT * FROM retractablebollard WHERE id = " + idBollard);
+
+			while(result.next()) {
+				RetractableBollard bollard = new RetractableBollard();
+
+				bollard.setId(result.getInt(1));
+				bollard.setAddress(result.getString(2));
+				bollard.setActive(result.getBoolean(3));
+				bollard.setState(result.getBoolean(4));
+				bollard.setWay(result.getBoolean(5));
+				
+
+
+				String json = converter.BollardToJson(bollard);
+				list.add(json);
+			}
+
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return list;
+		}
+}
 }

@@ -19,7 +19,11 @@ public class ConvertJSON {
 	public String RequestToJson(Request req) {
 		String jsonString = "";
 		try {
+			System.out.println("test request1");
 			jsonString = mapper.writeValueAsString(req);
+			System.out.println("test request1");
+			
+			
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
@@ -105,11 +109,6 @@ public class ConvertJSON {
 	}
 	
 	
-	
-	
-	
-	
-	
 	public DataAirAVG JsontoDataAVG(String jsonString) {
 		DataAirAVG dataAVG = new DataAirAVG();
 		try {
@@ -175,6 +174,7 @@ public class ConvertJSON {
 	
 	
 	public RetractableBollard JsonToBollard(String jsonString) {
+		
 		RetractableBollard bollard = new RetractableBollard();
 		try { bollard = mapper.readValue( jsonString ,RetractableBollard.class );
 		}catch (IOException e) {

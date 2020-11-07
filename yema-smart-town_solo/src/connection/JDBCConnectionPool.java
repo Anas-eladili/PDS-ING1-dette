@@ -10,14 +10,16 @@ public class JDBCConnectionPool {
 	private Connection myConnection;
 	private PropertiesFileReader file = new PropertiesFileReader();
 	
+	
 	public JDBCConnectionPool() {
 		 try {
 			 file.initJDBC();
 			 String driver = file.getProperty("driver");
 			 
 			 Class.forName(driver);
+			 //nombre +=1;
 
-			 for (int i = 0; i < 6; i++) {  
+			 for (int i = 0; i < 20; i++) {  
 				 myConnection = DriverManager.getConnection(file.getProperty("url"), file.getProperty("id"), file.getProperty("password"));
 				 connections.add(myConnection);
 
@@ -27,7 +29,9 @@ public class JDBCConnectionPool {
 				e.printStackTrace();
 
 		 }
-	}
+		 }
+	
+	
 	
 	/**
 	 * giveConnection method gives connections to clients whose need it
@@ -38,7 +42,9 @@ public class JDBCConnectionPool {
 		while (connections.isEmpty()) {
 			System.out.println("Veuillez patientez");
 		}
+		//nombre = connections.size();
 		Connection tempConnection = connections.get(0); 
+		//System.out.println(" nb connection:" +connections.size());
 		connections.remove(0);
 		return tempConnection;
 	}

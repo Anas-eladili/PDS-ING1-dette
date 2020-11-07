@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="src/ressources/jackson-annotations-2.11.0.rc1.jar"/>
 	<classpathentry kind="lib" path="src/ressources/org.yaml.snakeyaml_1.14.0.v201604211500.jar"/>
 	<classpathentry kind="lib" path="C:/Users/anase/OneDrive/Bureau/snakeyaml-1.9-sources.jar"/>

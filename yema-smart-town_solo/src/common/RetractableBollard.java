@@ -50,6 +50,10 @@ public class RetractableBollard {
 	public void OpenUpBollard() {
 		this.state = true;
 	}
-	public RetractableBollard() {} 
+	public RetractableBollard() {}
+	public RetractableBollard(int id, String address, boolean active, boolean state, boolean way) {
+		// TODO Auto-generated constructor stub
+	}
+	
 
 }

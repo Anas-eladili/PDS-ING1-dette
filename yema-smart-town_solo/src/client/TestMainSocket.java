@@ -128,7 +128,7 @@ public class TestMainSocket {
 					} else if (rep2.equals("2")) {
 						System.out.println(" you chose INSERT, please give us the following information :");
 						int id; String address; boolean isActive;boolean state;boolean way;
-						RetractableBollard bollard = new RetractableBollard();
+						RetractableBollard bollard  = new RetractableBollard();
 						
 						System.out.println("id : ");
 						id = enter3.nextInt();

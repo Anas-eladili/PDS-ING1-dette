@@ -109,6 +109,7 @@ public class ServerCommunication {
 		public CommonThread(Socket socket, DataSource source) {
 			this.clientSocket = socket;
 			connection = source.giveConnection();
+			
 			System.out.println("test");
 		} 
 
@@ -169,7 +170,7 @@ public class ServerCommunication {
 							}
 
 							if (req.getOperation_type().equals("update")) {
-								boolean result = factory.getData(req.getTarget()).update(req.getObj(), connection);
+								boolean result = factory.getData(req.getTarget()).update(req.getObj() , connection);
 								resp.setResponse_type("update");
 								resp.setResponse_state(result);
 
