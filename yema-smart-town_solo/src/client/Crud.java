@@ -40,6 +40,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.awt.Color;
 
 /**
  *
@@ -63,6 +64,7 @@ public class Crud extends javax.swing.JFrame {
 	
 
     public Crud() throws IOException  {
+    	getContentPane().setBackground(new Color(65, 105, 225));
         initComponents();
        
         
@@ -108,32 +110,32 @@ public class Crud extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtAddress = new javax.swing.JTextField();
         txtisActive = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblBollard = new javax.swing.JTable();
         btnSave = new javax.swing.JButton();
+        btnSave.setBackground(new Color(0, 0, 128));
+        btnSave.setForeground(new Color(0, 0, 128));
         btnUpdate = new javax.swing.JButton();
+        btnUpdate.setForeground(new Color(0, 0, 128));
+        btnUpdate.setBackground(new Color(0, 0, 128));
         btnDelete1 = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
+        btnDelete1.setForeground(new Color(0, 0, 128));
+        btnDelete1.setBackground(new Color(0, 0, 128));
+        jLabel6 = new javax.swing.JLabel();
+        jLabel6.setForeground(new Color(128, 0, 0));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Bollard");
         setResizable(false);
 
-        jLabel1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel1.setFont(new Font("Yu Gothic Medium", Font.BOLD, 13)); // NOI18N
         jLabel1.setText("Id");
 
-        jLabel2.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jLabel2.setFont(new Font("Yu Gothic Medium", Font.BOLD, 13)); // NOI18N
         jLabel2.setText("Address");
-
-        jLabel3.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jLabel3.setText("isActive");
         
-        jLabel3.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jLabel3.setText("state");
-        
-        jLabel4.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jLabel4.setText("way");
+        jLabel6.setFont(new Font("Yu Gothic Medium", Font.BOLD, 16)); // NOI18N
+        jLabel6.setText("Bollard Settings");
 
         tblBollard.setModel(new DefaultTableModel(
         	new Object[][] {
@@ -197,104 +199,113 @@ public class Crud extends javax.swing.JFrame {
         btnDelete1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnDelete1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
+            	try {
+            		btnDelete1ActionPerformed(evt);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            	
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel4.setText("Bollard Settings");
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel6.setText("Bollard Settings");
         
         Jlabel4 = new JLabel("State");
+        Jlabel4.setFont(new Font("Yu Gothic Medium", Font.BOLD, 13));
         
         txtState = new JTextField();
         txtState.setColumns(10);
         
         JLabel jLabel5 = new JLabel("Way");
-        jLabel5.setFont(new Font("Tahoma", Font.PLAIN, 13));
+        jLabel5.setFont(new Font("Yu Gothic Medium", Font.BOLD, 13));
         
         txtWay = new JTextField();
         txtWay.setColumns(10);
+        
+        JLabel lblIsactive = new JLabel("isActive");
+        lblIsactive.setFont(new Font("Yu Gothic Medium", Font.BOLD, 13));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         layout.setHorizontalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
+        			.addGap(78)
+        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        				.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(lblIsactive)
+        				.addComponent(Jlabel4, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(jLabel5))
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+        				.addGroup(layout.createSequentialGroup()
+        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        						.addGroup(layout.createSequentialGroup()
+        							.addGap(16)
+        							.addComponent(txtId, 188, 188, 188))
+        						.addGroup(layout.createSequentialGroup()
+        							.addGap(17)
+        							.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        								.addComponent(txtAddress, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE)
+        								.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        									.addComponent(txtState, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+        									.addComponent(txtWay, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
+        									.addComponent(txtisActive, GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)))))
+        					.addGap(44))
+        				.addGroup(layout.createSequentialGroup()
+        					.addPreferredGap(ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
+        					.addComponent(btnSave, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
+        					.addGap(61)))
         			.addGroup(layout.createParallelGroup(Alignment.LEADING)
         				.addGroup(layout.createSequentialGroup()
-        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        						.addGroup(layout.createSequentialGroup()
-        							.addGap(34)
-        							.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        								.addGroup(layout.createSequentialGroup()
-        									.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        										.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
-        										.addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
-        									.addGap(18)
-        									.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        										.addComponent(txtAddress)
-        										.addComponent(txtId)))
-        								.addGroup(layout.createSequentialGroup()
-        									.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        										.addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 86, GroupLayout.PREFERRED_SIZE)
-        										.addComponent(Jlabel4, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-        										.addComponent(jLabel5))
-        									.addPreferredGap(ComponentPlacement.RELATED)
-        									.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        										.addComponent(txtWay)
-        										.addComponent(txtisActive, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-        										.addComponent(txtState, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)))))
-        						.addGroup(Alignment.TRAILING, layout.createSequentialGroup()
-        							.addContainerGap(108, Short.MAX_VALUE)
-        							.addComponent(btnSave, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)))
-        					.addGap(18)
-        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        						.addComponent(jScrollPane1, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 376, GroupLayout.PREFERRED_SIZE)
-        						.addGroup(layout.createSequentialGroup()
-        							.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-        							.addGap(18)
-        							.addComponent(btnDelete1, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))))
-        				.addGroup(layout.createSequentialGroup()
-        					.addGap(282)
-        					.addComponent(jLabel4)))
-        			.addContainerGap())
+        					.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+        					.addGap(51)
+        					.addComponent(btnDelete1, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
+        				.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 376, GroupLayout.PREFERRED_SIZE))
+        			.addGap(161))
+        		.addGroup(Alignment.TRAILING, layout.createSequentialGroup()
+        			.addContainerGap(529, Short.MAX_VALUE)
+        			.addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
+        			.addGap(277))
         );
         layout.setVerticalGroup(
         	layout.createParallelGroup(Alignment.LEADING)
         		.addGroup(layout.createSequentialGroup()
-        			.addGap(10)
-        			.addComponent(jLabel4, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+        			.addGap(32)
+        			.addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
         			.addGap(18)
         			.addGroup(layout.createParallelGroup(Alignment.LEADING)
         				.addGroup(layout.createSequentialGroup()
-        					.addGap(19)
-        					.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE))
-        				.addGroup(layout.createSequentialGroup()
-        					.addGap(18)
+        					.addGap(29)
         					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
         						.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-        						.addComponent(txtId, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
+        						.addComponent(txtId, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
         					.addPreferredGap(ComponentPlacement.RELATED)
         					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
         						.addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-        						.addComponent(txtAddress, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+        						.addComponent(txtAddress, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
         					.addPreferredGap(ComponentPlacement.UNRELATED)
-        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        						.addComponent(jLabel3, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+        					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        						.addComponent(lblIsactive)
         						.addComponent(txtisActive, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-        					.addGap(6)
-        					.addGroup(layout.createParallelGroup(Alignment.LEADING)
-        						.addGroup(layout.createSequentialGroup()
-        							.addGap(7)
-        							.addComponent(txtState, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE)
-        							.addPreferredGap(ComponentPlacement.UNRELATED)
-        							.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        								.addComponent(jLabel5)
-        								.addComponent(txtWay, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)))
-        						.addComponent(Jlabel4, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))))
-        			.addGap(46)
+        					.addGap(12)
+        					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        						.addComponent(Jlabel4, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+        						.addComponent(txtState, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
+        					.addGap(18)
+        					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+        						.addComponent(jLabel5)
+        						.addComponent(txtWay, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)))
+        				.addGroup(layout.createSequentialGroup()
+        					.addGap(18)
+        					.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)))
+        			.addGap(58)
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-        				.addComponent(btnSave, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(btnDelete1, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
         				.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(btnDelete1, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
+        				.addComponent(btnSave, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
         			.addContainerGap(73, Short.MAX_VALUE))
         );
         getContentPane().setLayout(layout);
@@ -349,7 +360,7 @@ public class Crud extends javax.swing.JFrame {
                
                 if (info.isEmpty()) {
                 	
-                	System.out.println("anas");
+                	
                     saveUser(id, Address, isActive, state, way, client);
                     DefaultTableModel model = (DefaultTableModel) tblBollard.getModel();
                     Object[] row = new Object[5];
@@ -420,6 +431,11 @@ public class Crud extends javax.swing.JFrame {
           		resp = client.sendMessage(req);
           		ArrayList<String> info = resp.getValues();
                 if (!info.isEmpty() ) {
+                	/*Integer id1 = Integer.parseInt(txtId.getText());
+                    String Address1 = txtAddress.getText().trim();
+                    Boolean isActive1 = Boolean.parseBoolean(txtisActive.getText()); 
+                    Boolean state1 = Boolean.parseBoolean(txtState.getText());
+                    Boolean way1 = Boolean.parseBoolean(txtWay.getText());*/
                 	
                 	
                     update(id, Address , isActive, state, way, client);
@@ -465,7 +481,7 @@ public class Crud extends javax.swing.JFrame {
             if (option == 0) {
                 TableModel model = tblBollard.getModel();
 
-                String id = model.getValueAt(i, 2).toString();
+                String id = model.getValueAt(i, 0).toString();
                 if (tblBollard.getSelectedRows().length == 1) {
                     delete(id);
                     DefaultTableModel model1 = (DefaultTableModel) tblBollard.getModel();
@@ -557,15 +573,30 @@ public class Crud extends javax.swing.JFrame {
     public void delete(String id) throws IOException {
         try {
         	
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/user", "root", "");
-            String sql = "DELETE FROM `student` WHERE id_number='" + id + "'";
-            st = con.createStatement();
-            st.execute(sql);
-        } catch (ClassNotFoundException | SQLException ex) {
+        	final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
+    		final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
+    		RetractableBollard bollard = new RetractableBollard();
+    		Request req = new Request();
+    		ConvertJSON converter = new ConvertJSON();
+        	
+			bollard.setId(Integer.parseInt(id));
+        	
+        	req.setOperation_type("delete");
+    		req.setTarget("retractablebollard");
+    		req.setSource("client");
+    		req.setObj(converter.BollardToJson(bollard));
+    		
+    		client.startConnection(SERVER_ADDRESS, SERVER_PORT);
+
+    		client.sendMessage(req);
+        	
+            
+        } catch (Exception ex) {
             Logger.getLogger(Crud.class.getName()).log(Level.SEVERE, null, ex);
         }
        fetch( client);
+       client.stopConnection();
+       
     }
 
     //method to clear the txt fields
@@ -718,8 +749,7 @@ public class Crud extends javax.swing.JFrame {
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblBollard;
     private javax.swing.JTextField txtId;
@@ -729,5 +759,4 @@ public class Crud extends javax.swing.JFrame {
     private JTextField txtWay;
 	private Logger lOGGER;
 	private JLabel Jlabel4;
-	
 }

@@ -70,11 +70,12 @@ public class BollardDAO extends DAO<RetractableBollard>{
 		try {
 			preparedStatement = connection.prepareStatement("UPDATE retractablebollard SET address = ?, isActive = ?, state = ?, way = ? WHERE id = ?");
 			
-			preparedStatement.setInt(1, bollard.getId());
-			preparedStatement.setString(2, bollard.getAddress());
-			preparedStatement.setBoolean(3,bollard.isActive());
-			preparedStatement.setBoolean(4, bollard.isState());
-			preparedStatement.setBoolean(5,bollard.isWay());
+			//preparedStatement.setInt(1, bollard.getId());
+			preparedStatement.setString(1, bollard.getAddress());
+			preparedStatement.setBoolean(2,bollard.isActive());
+			preparedStatement.setBoolean(3, bollard.isState());
+			preparedStatement.setBoolean(4,bollard.isWay());
+			preparedStatement.setInt(5, bollard.getId());
 			preparedStatement.executeUpdate();
 			
 			return true;
@@ -134,6 +135,7 @@ public class BollardDAO extends DAO<RetractableBollard>{
 
 	@Override
 	public ArrayList<String> selectID(String id, Connection connection) {
+		
 		ArrayList<String> list = new ArrayList<String>();
 		int idBollard = Integer.valueOf(id);
 

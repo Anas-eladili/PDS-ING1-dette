@@ -102,13 +102,22 @@ public class ServerCommunication {
 		private AtomicBoolean running = new AtomicBoolean(false);
 		private Connection connection;
 		private Factory factory = new Factory();
+		private Boolean flag = false ;
 
 		private ConvertJSON converter = new ConvertJSON();
 		private Request req = new Request();
 
-		public CommonThread(Socket socket, DataSource source) {
+		public CommonThread(Socket socket, DataSource source)  {
 			this.clientSocket = socket;
+			
 			connection = source.giveConnection();
+			while(connection==null) {
+
+                 
+                
+				connection = source.giveConnection();
+			}
+			
 			
 			System.out.println("test");
 		} 

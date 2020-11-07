@@ -9,6 +9,8 @@ public class JDBCConnectionPool {
 	private ArrayList<Connection> connections = new ArrayList<Connection>();
 	private Connection myConnection;
 	private PropertiesFileReader file = new PropertiesFileReader();
+	private ArrayList<Connection> usedconnections = new ArrayList<Connection>();
+	//private int sizeMax = Integer.valueOf(System.getProperty("my.prop")); 
 	
 	
 	public JDBCConnectionPool() {
@@ -19,7 +21,7 @@ public class JDBCConnectionPool {
 			 Class.forName(driver);
 			 //nombre +=1;
 
-			 for (int i = 0; i < 20; i++) {  
+			 for (int i = 0; i < 1; i++) {  
 				 myConnection = DriverManager.getConnection(file.getProperty("url"), file.getProperty("id"), file.getProperty("password"));
 				 connections.add(myConnection);
 
@@ -38,23 +40,47 @@ public class JDBCConnectionPool {
 	 * if there isn't any connection available, they have to wait
 	 */
 	public synchronized Connection giveConnection () {
-
-		while (connections.isEmpty()) {
-			System.out.println("Veuillez patientez");
-		}
+		System.out.println("Veuillez patientez");
+		while(connections.isEmpty()) {
+			
+			
+			//throw new RuntimeException("Maximum pool size reached, no available connections!");
+			//if(connections.isEmpty()) {
+				sleep(1500);
+				
+			
+		//}
+			}
+		
+		
+			
+		
 		//nombre = connections.size();
 		Connection tempConnection = connections.get(0); 
-		//System.out.println(" nb connection:" +connections.size());
+		usedconnections.add(tempConnection);
+		System.out.println(" nb connexions crées:" +connections.size());
 		connections.remove(0);
-		return tempConnection;
-	}
+		System.out.println(" nb connexions restente:" +connections.size());
+		
+		return tempConnection;}
+		
+		
 	
+	
+	private void sleep(int i) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
 	/**
 	 * returnConnection method allows to return the connection used by a client
 	 * thanks to that, the connection is available again
 	*/
 	public synchronized void returnConnection (Connection c) {
 		connections.add(c);
+		usedconnections.remove(c);
 	}  
 	
 	/**
