@@ -8,10 +8,14 @@ import javax.swing.JTable;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 public class launchIhm {
 
+	
+	private JFrame frame;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -21,12 +25,27 @@ public class launchIhm {
 				try {
 					launchIhm window = new launchIhm();
 					window.frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
 	}
+	
+	
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
+	}
+
+
 
 	/**
 	 * Create the application.
@@ -39,34 +58,55 @@ public class launchIhm {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		JFrame frmBollardAndSensors = new JFrame();
-		frmBollardAndSensors.setTitle("Bollard and Sensors menu");
-		frame = frmBollardAndSensors;
-		frmBollardAndSensors.getContentPane().setLayout(null);
+		frame = new JFrame();
+		frame.setTitle("Bollard and Sensors menu");
+		frame.setBounds(100, 100, 711, 529);
+		frame.getContentPane().setLayout(null);
 		
-		JButton SensorB = new JButton("Sensor configuration");
+		JButton SensorB = new JButton("Car Setting");
 		SensorB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				
+				try {CrudCar c;
+				c = new CrudCar();
+				frame.setVisible(false);
+				c.setVisible(true);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 				
 			}
 		});
 		SensorB.setBounds(32, 81, 147, 36);
-		frmBollardAndSensors.getContentPane().add(SensorB);
+		frame.getContentPane().add(SensorB);
 		
 		JButton BollardB = new JButton("Bollard Configuration");
+		BollardB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+//launchIhm fen = new launchIhm();
+				
+				try {Crud c;
+					c = new Crud();
+					frame.setVisible(false);
+					c.setVisible(true);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+			}
+		});
 		BollardB.setBounds(251, 81, 141, 36);
-		frmBollardAndSensors.getContentPane().add(BollardB);
+		frame.getContentPane().add(BollardB);
 		
 		JButton SimulationB = new JButton("Simulation");
 		SimulationB.setBounds(151, 147, 120, 36);
-		frmBollardAndSensors.getContentPane().add(SimulationB);
-		frame.setBounds(100, 100, 638, 446);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
+		frame.getContentPane().add(SimulationB);
 		
-		table = new JTable();
-		frame.getContentPane().add(table);
+		
+		
 	}
 }

@@ -19,9 +19,9 @@ public class ConvertJSON {
 	public String RequestToJson(Request req) {
 		String jsonString = "";
 		try {
-			System.out.println("test request1");
+			
 			jsonString = mapper.writeValueAsString(req);
-			System.out.println("test request1");
+			
 			
 			
 		} catch (JsonProcessingException e) {

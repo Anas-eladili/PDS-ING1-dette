@@ -9,7 +9,7 @@ public class JDBCConnectionPool {
 	private ArrayList<Connection> connections = new ArrayList<Connection>();
 	private Connection myConnection;
 	private PropertiesFileReader file = new PropertiesFileReader();
-	private ArrayList<Connection> usedconnections = new ArrayList<Connection>();
+	//private ArrayList<Connection> usedconnections = new ArrayList<Connection>();
 	//private int sizeMax = Integer.valueOf(System.getProperty("my.prop")); 
 	
 	
@@ -21,7 +21,7 @@ public class JDBCConnectionPool {
 			 Class.forName(driver);
 			 //nombre +=1;
 
-			 for (int i = 0; i < 1; i++) {  
+			 for (int i = 0; i < 5; i++) {  
 				 myConnection = DriverManager.getConnection(file.getProperty("url"), file.getProperty("id"), file.getProperty("password"));
 				 connections.add(myConnection);
 
@@ -41,23 +41,23 @@ public class JDBCConnectionPool {
 	 */
 	public synchronized Connection giveConnection () {
 		System.out.println("Veuillez patientez");
-		while(connections.isEmpty()) {
+		//while(connections.isEmpty()) {
 			
 			
 			//throw new RuntimeException("Maximum pool size reached, no available connections!");
 			//if(connections.isEmpty()) {
-				sleep(1500);
+				//sleep(1500);
 				
 			
 		//}
-			}
+			//}
 		
 		
 			
 		
 		//nombre = connections.size();
 		Connection tempConnection = connections.get(0); 
-		usedconnections.add(tempConnection);
+		//usedconnections.add(tempConnection);
 		System.out.println(" nb connexions crées:" +connections.size());
 		connections.remove(0);
 		System.out.println(" nb connexions restente:" +connections.size());
@@ -67,10 +67,7 @@ public class JDBCConnectionPool {
 		
 	
 	
-	private void sleep(int i) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 
 
@@ -80,7 +77,7 @@ public class JDBCConnectionPool {
 	*/
 	public synchronized void returnConnection (Connection c) {
 		connections.add(c);
-		usedconnections.remove(c);
+		//usedconnections.remove(c);
 	}  
 	
 	/**

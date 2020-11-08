@@ -38,4 +38,9 @@ public abstract class DAO<T> {
        */
       public abstract ArrayList<String> selectID(String id, Connection connection);
 
+	public ArrayList<String> selectAll(Connection connection) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

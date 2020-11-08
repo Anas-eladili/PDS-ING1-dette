@@ -111,12 +111,6 @@ public class ServerCommunication {
 			this.clientSocket = socket;
 			
 			connection = source.giveConnection();
-			while(connection==null) {
-
-                 
-                
-				connection = source.giveConnection();
-			}
 			
 			
 			System.out.println("test");
@@ -206,7 +200,17 @@ public class ServerCommunication {
 								jsonResponse = converter.ResponseToJson(resp); System.out.println(jsonResponse);
 								out.println(jsonResponse);
 								
-							}if (req.getOperation_type().equals("selectalert")) {
+							}
+							if (req.getOperation_type().equals("selectAll")) {
+								ArrayList<String> result = factory.getData(req.getTarget()).selectAll(connection); 
+								resp.setResponse_type("selectAll");
+								resp.setResponse_state(true);
+								resp.setValues(result);
+
+								jsonResponse = converter.ResponseToJson(resp); System.out.println(jsonResponse);
+								out.println(jsonResponse);
+							}
+							if (req.getOperation_type().equals("selectalert")) {
 								infotrafficDAO dao = new infotrafficDAO();
 								ArrayList<String> result = dao.selectalert(connection);
 								resp.setResponse_type("selectalert");
@@ -236,12 +240,12 @@ public class ServerCommunication {
 
 					}
 					System.out.println("------ END of communication -------");
-					source.returnConnection(connection);
+					
 
 					in.close();
 					out.close();
 					clientSocket.close();
-
+					source.returnConnection(connection);
 					this.currentThread().interrupt(); 
 					System.out.println("Thread was interrupted");
 				} catch (IOException e) {}	

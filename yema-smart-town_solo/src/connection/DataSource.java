@@ -19,7 +19,7 @@ public class DataSource {
 		} catch (Exception ee) {}
 	}
 	
-	public static void closeAllConnection() {
+	public void closeAllConnection() {
 		try {
 			pool.closeAllConnections();
 		} catch (Exception e) {}

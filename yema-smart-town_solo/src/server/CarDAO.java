@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import common.Car;
 import common.ConvertJSON;
+import common.RetractableBollard;
 
 public class CarDAO extends DAO<Car>{
 	private ConvertJSON converter = new ConvertJSON();
@@ -56,9 +57,9 @@ try {
 		Car car  = converter.JsonToCar(device);
 		try {
 			preparedStatement = connection.prepareStatement("UPDATE car SET isInTheCity = ? WHERE id = ?");
-			preparedStatement.setInt(1, car.getId());
+			preparedStatement.setInt(2, car.getId());
 			
-			preparedStatement.setBoolean(2, car.getIsInTheCity());
+			preparedStatement.setBoolean(1, car.getIsInTheCity());
 			
 			
 			
@@ -70,6 +71,30 @@ try {
 		return false;
 	}
 
+	@Override
+	public ArrayList<String> selectAll(Connection connection) {
+		ArrayList<String> list = new ArrayList<String>();
+		try {
+			Statement myRequest = connection.createStatement();
+			ResultSet result = myRequest.executeQuery("SELECT * FROM car  ");
+			
+			while(result.next()) {
+				Car car = new Car();
+				
+				car.setId(result.getInt(1));
+				car.setIsInTheCity(result.getBoolean(2));
+				
+				
+				String json = converter.CarToJson(car);
+				list.add(json);
+			}
+			
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace(); }
+			
+		return list;
+	}
 	@Override
 	public ArrayList<String> select(Connection connection) {
 		ArrayList<String> list = new ArrayList<String>();
@@ -97,8 +122,31 @@ try {
 
 	@Override
 	public ArrayList<String> selectID(String id, Connection connection) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		ArrayList<String> list = new ArrayList<String>();
+		int idCar = Integer.valueOf(id);
 
-}
+		try {
+			Statement myRequest = connection.createStatement();
+			ResultSet result = myRequest.executeQuery("SELECT * FROM car WHERE id = " + idCar);
+
+			while(result.next()) {
+				Car bollard = new Car();
+
+				bollard.setId(result.getInt(1));
+				
+				bollard.setIsInTheCity(result.getBoolean(2));
+				
+
+
+				String json = converter.CarToJson(bollard);
+				list.add(json);
+			}
+
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return list;
+	}
+	}}
+
+

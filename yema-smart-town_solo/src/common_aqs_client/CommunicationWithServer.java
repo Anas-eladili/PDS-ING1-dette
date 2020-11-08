@@ -58,13 +58,13 @@ public class CommunicationWithServer {
  * To finish, sendMessage display this object 
  */
 	public Response sendMessage(Request req) throws IOException {
-		System.out.println("test1");
+		
 		String jsonRequest = converter.RequestToJson(req); 
-		System.out.println("test1");
+		
 		out.println(jsonRequest); 
-		System.out.println("test2");
+		
 		String jsonResponse = in.readLine();
-		System.out.println("test3");
+		
 		Response resp = converter.JsontoResponse(jsonResponse);
 		
 		return resp;
