@@ -62,11 +62,13 @@ public class CrudCar extends javax.swing.JFrame {
 	private ClientCommunication client;*/
     
     ArrayList<Car> bollardinfo = new ArrayList<>();
-    CommunicationWithServer client = new CommunicationWithServer();
+    CommunicationWithServer client ;
     PropertiesFileReader serveconfig = new PropertiesFileReader();
 	
+	
 
-    public CrudCar() throws IOException  {
+    public CrudCar(CommunicationWithServer client) throws IOException  {
+    	this.client = client;
     	getContentPane().setBackground(new Color(65, 105, 225));
         initComponents();
        
@@ -79,8 +81,9 @@ public class CrudCar extends javax.swing.JFrame {
 		
 		
 		
-		final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
+		/*final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
 		final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
+		client.startConnection(SERVER_ADDRESS, SERVER_PORT);*/
 		
 		
 		
@@ -88,7 +91,7 @@ public class CrudCar extends javax.swing.JFrame {
         
 		
 		fetch(client);
-		client.stopConnection();
+		//client.stopConnection();
 		
 		
     }
@@ -219,8 +222,16 @@ public class CrudCar extends javax.swing.JFrame {
         btnRetour.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		setVisible(false);
-				launchIhm launchIhm = new launchIhm();
+				launchIhm launchIhm = null;
+				try {
+					launchIhm = new launchIhm();
+					client.stopConnection();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				launchIhm.getFrame().setVisible(true);
+				
 			}
         });
 
@@ -301,7 +312,7 @@ public class CrudCar extends javax.swing.JFrame {
         
         if (  !isInTheCity.toString().isEmpty()  && !id.toString(id).isEmpty() ) {
             try {
-            	CommunicationWithServer client = new CommunicationWithServer();
+            	//CommunicationWithServer client = new CommunicationWithServer();
             	final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
         		final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
            		
@@ -322,7 +333,7 @@ public class CrudCar extends javax.swing.JFrame {
         		req.setObj(id.toString());
         		
         		
-        		client.startConnection(SERVER_ADDRESS, SERVER_PORT);
+        		//client.startConnection(SERVER_ADDRESS, SERVER_PORT);
         		
         		Response resp= new Response();
         		
@@ -348,7 +359,7 @@ public class CrudCar extends javax.swing.JFrame {
                 }
 
                 clear();
-                client.stopConnection();
+              //  client.stopConnection();
             } catch (Exception ex) {
                 Logger.getLogger(CrudCar.class.getName()).log(Level.SEVERE, null, ex);
             }finally {
@@ -365,13 +376,13 @@ public class CrudCar extends javax.swing.JFrame {
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) throws IOException {//GEN-FIRST:event_btnUpdateActionPerformed
         // TODO add your handling code here:
-    	Integer id = Integer.parseInt(txtId.getText()); //txtId.getText().trim();
+    	Integer id = Integer.parseInt(txtId.getText()); 
         
         Boolean isInTheCity = Boolean.parseBoolean(txtWay.getText());
           
-          if (  !isInTheCity.toString().isEmpty()  && !id.toString(id).isEmpty() ) {
+          if (  !isInTheCity.toString().isEmpty()   ) {
               try {
-            	  CommunicationWithServer client = new CommunicationWithServer();
+            	 // CommunicationWithServer client = new CommunicationWithServer();
               	final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
           		final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
              		
@@ -395,7 +406,7 @@ public class CrudCar extends javax.swing.JFrame {
           		req.setObj(id.toString());
           		
           		
-          		client.startConnection(SERVER_ADDRESS, SERVER_PORT);
+          		//client.startConnection(SERVER_ADDRESS, SERVER_PORT);
           		
           		Response resp= new Response();
           		
@@ -416,7 +427,7 @@ public class CrudCar extends javax.swing.JFrame {
                     DefaultTableModel model = (DefaultTableModel) tblBollard.getModel();
                     model.setRowCount(0);                   
                     fetch(client);
-                    client.stopConnection();
+                   // client.stopConnection();
                     alert("Update was successful");
                     
                 } else {
@@ -459,7 +470,7 @@ public class CrudCar extends javax.swing.JFrame {
                     model1.setRowCount(0);
                     fetch(client);
                     clear();
-                    client.stopConnection();
+                  //  client.stopConnection();
                 }
             }
         } else {
@@ -491,10 +502,10 @@ public class CrudCar extends javax.swing.JFrame {
 		req.setSource("");
 		req.setObj(converter.CarToJson(car));
 		
-		client.startConnection(SERVER_ADDRESS, SERVER_PORT);
+		//client.startConnection(SERVER_ADDRESS, SERVER_PORT);
 
 		client.sendMessage(req);
-		client.stopConnection();
+		//client.stopConnection();
 		System.out.println("ok");
     }
 
@@ -515,23 +526,18 @@ public class CrudCar extends javax.swing.JFrame {
     		req.setSource("client");
     		req.setObj(converter.CarToJson(car));
     		
-    		client.startConnection(SERVER_ADDRESS, SERVER_PORT);
+    		//client.startConnection(SERVER_ADDRESS, SERVER_PORT);
 
     		client.sendMessage(req);
     		
-    		
-            
-        	
-        	
-        	
-        	
+    	
         	
         	
         } catch (Exception ex) {
             Logger.getLogger(CrudCar.class.getName()).log(Level.SEVERE, null, ex);
         }
        fetch(client);
-       client.stopConnection();
+       //client.stopConnection();
     }
 
     //delete details in the db
@@ -550,8 +556,7 @@ public class CrudCar extends javax.swing.JFrame {
     		req.setTarget("car");
     		req.setSource("client");
     		req.setObj(converter.CarToJson(car));
-    		
-    		client.startConnection(SERVER_ADDRESS, SERVER_PORT);
+    		//client.startConnection(SERVER_ADDRESS, SERVER_PORT);
 
     		client.sendMessage(req);
         	
@@ -560,7 +565,7 @@ public class CrudCar extends javax.swing.JFrame {
             Logger.getLogger(CrudCar.class.getName()).log(Level.SEVERE, null, ex);
         }
        fetch( client);
-       client.stopConnection();
+      // client.stopConnection();
        
     }
 
@@ -603,7 +608,7 @@ public class CrudCar extends javax.swing.JFrame {
 		req.setTarget("car");
 		
 		
-		client.startConnection(SERVER_ADDRESS, SERVER_PORT);
+		
 		
 		
 		
@@ -696,7 +701,9 @@ public class CrudCar extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             try {
-				new CrudCar().setVisible(true);
+            	 CommunicationWithServer client = new CommunicationWithServer();
+            	 
+				new CrudCar(client).setVisible(true);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

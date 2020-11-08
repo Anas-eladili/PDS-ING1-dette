@@ -45,16 +45,13 @@ public class JDBCConnectionPool {
 			
 			
 			//throw new RuntimeException("Maximum pool size reached, no available connections!");
-			//if(connections.isEmpty()) {
-				//sleep(1500);
+			if(connections.isEmpty()) {
+				sleep(1500);
 				
 			
-		//}
-			//}
-		
-		
+		}
 			
-		
+
 		//nombre = connections.size();
 		Connection tempConnection = connections.get(0); 
 		//usedconnections.add(tempConnection);
@@ -63,6 +60,11 @@ public class JDBCConnectionPool {
 		System.out.println(" nb connexions restente:" +connections.size());
 		
 		return tempConnection;}
+
+private void sleep(int i) {
+	// TODO Auto-generated method stub
+	
+}
 		
 		
 	

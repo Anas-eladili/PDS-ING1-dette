@@ -9,7 +9,7 @@ public class DataSource {
 		pool = new JDBCConnectionPool();
 	}
 	
-	public static Connection giveConnection() { 
+	public  Connection giveConnection() { 
 		return pool.giveConnection();
 	}
 	

@@ -113,7 +113,7 @@ public class ServerCommunication {
 			connection = source.giveConnection();
 			
 			
-			System.out.println("test");
+			//System.out.println("test");
 		} 
 
 		/**
@@ -241,11 +241,11 @@ public class ServerCommunication {
 					}
 					System.out.println("------ END of communication -------");
 					
-
+					source.returnConnection(connection);
 					in.close();
 					out.close();
 					clientSocket.close();
-					source.returnConnection(connection);
+					
 					this.currentThread().interrupt(); 
 					System.out.println("Thread was interrupted");
 				} catch (IOException e) {}	

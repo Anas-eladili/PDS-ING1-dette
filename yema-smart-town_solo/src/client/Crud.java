@@ -61,20 +61,20 @@ public class Crud extends javax.swing.JFrame {
 	 */
 
 	ArrayList<RetractableBollard> bollardinfo = new ArrayList<>();
-	
+	CommunicationWithServer client ;
 	PropertiesFileReader serveconfig = new PropertiesFileReader();
 
-	public Crud() throws IOException {
+	public Crud(CommunicationWithServer client) throws IOException {
 		getContentPane().setBackground(new Color(65, 105, 225));
+		this.client= client;
 		initComponents();
 
-		lOGGER = Logger.getLogger(Crud.class.getName());
-
+		
 		serveconfig.initServer();
 
 		final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
 		final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
-		CommunicationWithServer client = new CommunicationWithServer();
+		 lOGGER = Logger.getLogger(CrudCar.class.getName());
 		
 		fetch(client);
 
@@ -210,8 +210,17 @@ public class Crud extends javax.swing.JFrame {
 		btnRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				launchIhm launchIhm = new launchIhm();
+				launchIhm launchIhm = null;
+				try {client.stopConnection();
+
+					launchIhm = new launchIhm();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				launchIhm.getFrame().setVisible(true);
+				
+			
 			}
 		});
 
@@ -312,7 +321,7 @@ public class Crud extends javax.swing.JFrame {
 		if (!Address.isEmpty() && !isActive.toString().isEmpty() && !state.toString().isEmpty()
 				&& !way.toString().isEmpty() && !id.toString(id).isEmpty()) {
 			try {
-				CommunicationWithServer client = new CommunicationWithServer();
+				//CommunicationWithServer client = new CommunicationWithServer();
 				final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
 				final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
 
@@ -329,9 +338,9 @@ public class Crud extends javax.swing.JFrame {
 				req.setTarget("retractablebollard");
 				req.setObj(id.toString());
 
-				System.out.println("Hello1");
-				client.startConnection(SERVER_ADDRESS, SERVER_PORT);
-				System.out.println("Hello2");
+				
+				//client.startConnection(SERVER_ADDRESS, SERVER_PORT);
+				
 				Response resp = new Response();
 
 				resp = client.sendMessage(req);
@@ -353,7 +362,7 @@ public class Crud extends javax.swing.JFrame {
 				}
 
 				clear();
-				client.stopConnection();
+				//client.stopConnection();
 			} catch (Exception ex) {
 				Logger.getLogger(Crud.class.getName()).log(Level.SEVERE, null, ex);
 			} finally {
@@ -380,7 +389,7 @@ public class Crud extends javax.swing.JFrame {
 		if (!Address.isEmpty() && !isActive.toString().isEmpty() && !state.toString().isEmpty()
 				&& !way.toString().isEmpty() && !id.toString(id).isEmpty()) {
 			try {
-				CommunicationWithServer client = new CommunicationWithServer();
+				
 				final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
 				final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
 
@@ -397,7 +406,7 @@ public class Crud extends javax.swing.JFrame {
 				req.setTarget("retractablebollard");
 				req.setObj(id.toString());
 
-				client.startConnection(SERVER_ADDRESS, SERVER_PORT);
+				//client.startConnection(SERVER_ADDRESS, SERVER_PORT);
 
 				Response resp = new Response();
 
@@ -417,7 +426,7 @@ public class Crud extends javax.swing.JFrame {
 					DefaultTableModel model = (DefaultTableModel) tblBollard.getModel();
 					model.setRowCount(0);
 					fetch(client);
-					client.stopConnection();
+					//client.stopConnection();
 					alert("Update was successful");
 
 				} else {
@@ -457,13 +466,13 @@ public class Crud extends javax.swing.JFrame {
 
 				String id = model.getValueAt(i, 0).toString();
 				if (tblBollard.getSelectedRows().length == 1) {
-					CommunicationWithServer client = new CommunicationWithServer();
+					
 					delete(id,client);
 					
 					DefaultTableModel model1 = (DefaultTableModel) tblBollard.getModel();
 					model1.setRowCount(0);
 					fetch(client);
-					client.stopConnection();
+					//client.stopConnection();
 					clear();
 				}
 			}
@@ -486,8 +495,7 @@ public class Crud extends javax.swing.JFrame {
 	public void saveUser(Integer id, String Address, Boolean isActive, Boolean state, Boolean way,
 			CommunicationWithServer client) throws IOException {
 
-		final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
-		final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
+		
 		RetractableBollard bollard = new RetractableBollard();
 		Request req = new Request();
 		ConvertJSON converter = new ConvertJSON();
@@ -501,10 +509,10 @@ public class Crud extends javax.swing.JFrame {
 		req.setSource("");
 		req.setObj(converter.BollardToJson(bollard));
 
-		client.startConnection(SERVER_ADDRESS, SERVER_PORT);
+		//client.startConnection(SERVER_ADDRESS, SERVER_PORT);
 
 		client.sendMessage(req);
-		client.stopConnection();
+		//client.stopConnection();
 		System.out.println("ok");
 	}
 
@@ -530,7 +538,7 @@ public class Crud extends javax.swing.JFrame {
 			req.setSource("client");
 			req.setObj(converter.BollardToJson(bollard));
 
-			client.startConnection(SERVER_ADDRESS, SERVER_PORT);
+			//client.startConnection(SERVER_ADDRESS, SERVER_PORT);
 
 			client.sendMessage(req);
 
@@ -538,7 +546,7 @@ public class Crud extends javax.swing.JFrame {
 			Logger.getLogger(Crud.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		fetch(client);
-		client.stopConnection();
+	//	client.stopConnection();
 	}
 
 	// delete details in the db
@@ -558,7 +566,7 @@ public class Crud extends javax.swing.JFrame {
 			req.setSource("client");
 			req.setObj(converter.BollardToJson(bollard));
 
-			client.startConnection(SERVER_ADDRESS, SERVER_PORT);
+		//	client.startConnection(SERVER_ADDRESS, SERVER_PORT);
 
 			client.sendMessage(req);
 
@@ -566,7 +574,7 @@ public class Crud extends javax.swing.JFrame {
 			Logger.getLogger(Crud.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		fetch(client);
-		client.stopConnection();
+		//client.stopConnection();
 
 	}
 
@@ -585,8 +593,7 @@ public class Crud extends javax.swing.JFrame {
 		PropertiesFileReader serveconfig = new PropertiesFileReader();
 		serveconfig.initServer();
 
-		final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
-		final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
+		
 
 		bollardinfo.clear();
 		Request req = new Request();
@@ -595,15 +602,15 @@ public class Crud extends javax.swing.JFrame {
 		req.setSource("client");
 		req.setOperation_type("select");
 		req.setTarget("retractablebollard");
-		System.out.println("SERVER_PORT " + SERVER_PORT + " SERVER_ADDRESS " + SERVER_ADDRESS);
+		
 
-		client.startConnection(SERVER_ADDRESS, SERVER_PORT);
-		System.out.println("Test2");
+		//client.startConnection(SERVER_ADDRESS, SERVER_PORT);
+		
 		Response resp = new Response();
 		try {
 
 			resp = client.sendMessage(req);
-			client.stopConnection();
+			
 			ArrayList<String> databollard = resp.getValues();
 			ArrayList<RetractableBollard> data = new ArrayList<RetractableBollard>();
 
@@ -676,7 +683,8 @@ public class Crud extends javax.swing.JFrame {
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(() -> {
 			try {
-				new Crud().setVisible(true);
+				 CommunicationWithServer client = new CommunicationWithServer();
+				new Crud(client).setVisible(true);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

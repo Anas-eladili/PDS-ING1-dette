@@ -86,7 +86,7 @@ public class SensorOperation {
 	{Request request3= new Request();
 	 request3.setOperation_type("selectalert");
 	 request3.setTarget("infotraffic"); 
-	 request3.setSource("client");                                               //code pour savoir alert ou pas 
+	 request3.setSource("client");                                               //code pour savoir s'il y a alert ou pas 
 	 ArrayList<String> list = communication.sendMessage(request3).getValues();
 	 
 	 boolean bool1=Boolean.parseBoolean(list.get(0)); 
