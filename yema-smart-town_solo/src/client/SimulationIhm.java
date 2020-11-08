@@ -34,12 +34,22 @@ public class SimulationIhm {
 	 * Launch the application.
 	 */
 	 
+	
+	
 	/**
 	 * Create the application.
 	 */
 	public SimulationIhm(CommunicationWithServer client) {
 		this.client = client;
 		initialize();
+	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
+
+	public void setFrame(JFrame frame) {
+		this.frame = frame;
 	}
 
 	/**
@@ -76,15 +86,17 @@ public class SimulationIhm {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				launchIhm launchIhm = null;
-				try {client.stopConnection();
+				try {
+					
 
 					launchIhm = new launchIhm();
+					client.stopConnection();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				launchIhm.getFrame().setVisible(true);
-				
+				frame.setVisible(false);
 			
 			
 			}

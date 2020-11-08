@@ -12,6 +12,8 @@ import common.Request;
 import common.RetractableBollard;
 import common.VehicleSensor;
 import common.infotraffic;
+import connection.DataSource;
+import connection.JDBCConnectionPool;
 import connection.PropertiesFileReader;
 import rectractable_bollard_vehicule_sensor.SensorOperation;
 
@@ -24,17 +26,27 @@ public class TestMainSocket {
 		PropertiesFileReader serveconfig = new PropertiesFileReader();
 		serveconfig.initServer();
 		
+		
 		final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
 		final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
 		
 		try {
-			
+			JDBCConnectionPool pool= new JDBCConnectionPool() ;
 			System.out.println("\n");
 			LOGGER.log(Level.INFO, "*** Client Program Beginning ***");
 			System.out.println("\n");
 			ConvertJSON converter = new ConvertJSON();
 			ClientCommunication client = new ClientCommunication();
+			/*while(pool.connections.isEmpty()) {
+				System.out.println( " wait ");}*/
 			client.startConnection(SERVER_ADDRESS, SERVER_PORT);
+			
+			
+			
+			
+			
+			
+			
 			Request req = new Request();
 			
 			Scanner enter = new Scanner(System.in);
@@ -48,47 +60,10 @@ public class TestMainSocket {
 			
 			Scanner enter6 = new Scanner(System.in);
 			Scanner enter7 = new Scanner(System.in);
-			Scanner enter8 = new Scanner(System.in);
-			Scanner enter9 = new Scanner(System.in);
-			Scanner enter10 = new Scanner(System.in);
-			Scanner enter11 = new Scanner(System.in);
-			Scanner enter12 = new Scanner(System.in);
-			Scanner enter13 = new Scanner(System.in);
-			Scanner enter14 = new Scanner(System.in);
-			Scanner enter15 = new Scanner(System.in);
-			Scanner enter16 = new Scanner(System.in); 
-			Scanner enter17 = new Scanner(System.in);
-			Scanner enter18 = new Scanner(System.in);
-			Scanner enter19 = new Scanner(System.in);
-			Scanner enter20 = new Scanner(System.in);
-			Scanner enter21 = new Scanner(System.in);
-			Scanner enter22 = new Scanner(System.in);
-			Scanner enter23 = new Scanner(System.in);
-			Scanner enter24 = new Scanner(System.in);
-			Scanner enter25 = new Scanner(System.in);
-			Scanner enter26 = new Scanner(System.in);
-			Scanner enter27 = new Scanner(System.in);
-			Scanner enter28 = new Scanner(System.in);
-			Scanner enter29 = new Scanner(System.in);
-			Scanner enter30 = new Scanner(System.in);
-			Scanner enter31 = new Scanner(System.in);
-			Scanner enter32 = new Scanner(System.in);
-			Scanner enter33 = new Scanner(System.in);
-			Scanner enter34 = new Scanner(System.in);
-			Scanner enter35 = new Scanner(System.in);
-			Scanner enter36 = new Scanner(System.in);
-			Scanner enter37 = new Scanner(System.in);
-			Scanner enter38 = new Scanner(System.in);
-			Scanner enter39 = new Scanner(System.in);
-			Scanner enter40 = new Scanner(System.in);
-			Scanner enter41 = new Scanner(System.in);
-			Scanner enter42 = new Scanner(System.in);
-			Scanner enter43 = new Scanner(System.in);
-			Scanner enter44 = new Scanner(System.in);
-			Scanner enter45 = new Scanner(System.in);
+		
+			
 
-			Scanner enter4_1 = new Scanner(System.in);
-			Scanner enter4_2 = new Scanner(System.in);
+		
 			
 			System.out.println("********************************************************************************");
 			System.out.println("************************* WELCOME TO CLIENT MENU *******************************");
@@ -96,7 +71,7 @@ public class TestMainSocket {
 		
 			boolean fin = false;
 			System.out.print("Please, choose from the menu -> "); String user = enterName.nextLine();
-
+			
 			while (!fin) {
 				System.out.println(user + ". What do you want to do ? ");
 				
@@ -452,14 +427,9 @@ public class TestMainSocket {
 				
 				if (r.equals("Y")) {
 					fin = true;
-					req.setOperation_type("end");
-					req.setTarget("");
 					
-
-					client.sendMessage(req);
 					
 					client.stopConnection();
-
 				}
 			}	
 						

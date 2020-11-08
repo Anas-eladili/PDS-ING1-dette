@@ -14,11 +14,16 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.JLabel;
+import java.awt.Color;
+import java.awt.SystemColor;
 
 public class launchIhm {
 
 	
-	private JFrame frame;
+	private JFrame frmBollardAndTraffic;
 	CommunicationWithServer client;
 	/**
 	 * Launch the application.
@@ -28,7 +33,7 @@ public class launchIhm {
 			public void run() {
 				try {
 					launchIhm window = new launchIhm();
-					window.frame.setVisible(true);
+					window.frmBollardAndTraffic.setVisible(true);
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,13 +45,13 @@ public class launchIhm {
 	
 
 	public JFrame getFrame() {
-		return frame;
+		return frmBollardAndTraffic;
 	}
 
 
 
 	public void setFrame(JFrame frame) {
-		this.frame = frame;
+		this.frmBollardAndTraffic = frame;
 	}
 
 
@@ -72,12 +77,16 @@ public class launchIhm {
 		final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
 		client.startConnection(SERVER_ADDRESS, SERVER_PORT);*/
 		//client.stopConnection();
-		frame = new JFrame();
-		frame.setTitle("Bollard and Sensors menu");
-		frame.setBounds(100, 100, 711, 529);
-		frame.getContentPane().setLayout(null);
+		frmBollardAndTraffic = new JFrame();
+		frmBollardAndTraffic.getContentPane().setBackground(Color.GRAY);
+		frmBollardAndTraffic.getContentPane().setFont(new Font("Yu Gothic Medium", Font.BOLD, 12));
+		frmBollardAndTraffic.setTitle("Bollard and traffic menu");
+		frmBollardAndTraffic.setBounds(100, 100, 464, 273);
+		frmBollardAndTraffic.getContentPane().setLayout(null);
 		
 		JButton SensorB = new JButton("Car Setting");
+		SensorB.setForeground(SystemColor.desktop);
+		SensorB.setFont(new Font("Yu Gothic Medium", Font.BOLD, 13));
 		SensorB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -91,7 +100,7 @@ public class launchIhm {
 					client.startConnection(SERVER_ADDRESS, SERVER_PORT);
 				
 				c = new CrudCar(client);
-				frame.setVisible(false);
+				frmBollardAndTraffic.setVisible(false);
 				c.setVisible(true);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
@@ -100,10 +109,11 @@ public class launchIhm {
 				
 			}
 		});
-		SensorB.setBounds(32, 81, 147, 36);
-		frame.getContentPane().add(SensorB);
+		SensorB.setBounds(31, 81, 147, 36);
+		frmBollardAndTraffic.getContentPane().add(SensorB);
 		
 		JButton BollardB = new JButton("Bollard Configuration");
+		BollardB.setFont(new Font("Yu Gothic Medium", Font.BOLD, 13));
 		BollardB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -118,7 +128,7 @@ public class launchIhm {
 					final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
 					client.startConnection(SERVER_ADDRESS, SERVER_PORT);
 					c = new Crud(client);
-					frame.setVisible(false);
+					frmBollardAndTraffic.setVisible(false);
 					c.setVisible(true);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -128,12 +138,14 @@ public class launchIhm {
 				
 			}
 		});
-		BollardB.setBounds(251, 81, 141, 36);
-		frame.getContentPane().add(BollardB);
+		BollardB.setBounds(238, 81, 167, 36);
+		frmBollardAndTraffic.getContentPane().add(BollardB);
 		
 		JButton SimulationB = new JButton("Simulation");
+		SimulationB.setFont(new Font("Yu Gothic Medium", Font.BOLD, 13));
 		SimulationB.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) { SimulationIhm c;
+			public void actionPerformed(ActionEvent e) { 
+				SimulationIhm c;
 				
 				CommunicationWithServer client = new CommunicationWithServer();
 		    	
@@ -144,8 +156,8 @@ public class launchIhm {
 					try {
 						client.startConnection(SERVER_ADDRESS, SERVER_PORT);
 						c = new SimulationIhm(client);
-						frame.setVisible(false);
-						c.setVisible(true);
+						frmBollardAndTraffic.setVisible(false);
+						c.getFrame().setVisible(true);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -157,7 +169,12 @@ public class launchIhm {
 			
 		});
 		SimulationB.setBounds(151, 147, 120, 36);
-		frame.getContentPane().add(SimulationB);
+		frmBollardAndTraffic.getContentPane().add(SimulationB);
+		
+		JLabel lblNewLabel = new JLabel("Bollard and Traffic Menu");
+		lblNewLabel.setFont(new Font("Yu Gothic Medium", Font.BOLD | Font.ITALIC, 15));
+		lblNewLabel.setBounds(120, 24, 220, 41);
+		frmBollardAndTraffic.getContentPane().add(lblNewLabel);
 		
 		
 		/*	client.stopConnection();*/

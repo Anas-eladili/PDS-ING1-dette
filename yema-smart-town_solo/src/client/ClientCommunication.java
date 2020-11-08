@@ -5,10 +5,11 @@ import java.net.*;
 import common.ConvertJSON;
 import common.Request;
 import common.Response;
+import connection.PropertiesFileReader;
 /**
  * ClientCommunication implements client socket connection with the server
  * */
-public class ClientCommunication {
+public class ClientCommunication implements Runnable {
 	private Socket clientSocket;
 	private PrintWriter out;
 	private BufferedReader in = null;
@@ -74,4 +75,35 @@ public Response sendMessageresp(Request req) throws IOException {
 		out.close();
 		clientSocket.close();
 	}
+
+@Override
+public void run() {
+	// TODO Auto-generated method stub
+	PropertiesFileReader serveconfig = new PropertiesFileReader();
+	serveconfig.initServer();
+	
+	
+	final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
+	final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
+	try {
+		clientSocket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	try {
+		out = new PrintWriter(clientSocket.getOutputStream(), true);
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	try {
+		in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	converter = new ConvertJSON();
+	
+}
 }

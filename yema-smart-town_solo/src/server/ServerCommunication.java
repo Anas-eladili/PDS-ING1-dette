@@ -34,6 +34,20 @@ public class ServerCommunication {
 		new ThreadClient(portClient).start();
 		new ThreadSensor(portSensor).start();
 	}
+	@SuppressWarnings("deprecation")
+	public void stop(int portClient, int portSensor) throws IOException {
+		source = new DataSource();
+
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException ex) {}
+		new ThreadClient(portClient).stop();
+		new ThreadSensor(portSensor).stop();
+		
+
+		
+	}
+	
 
 	/**
 	 * 
@@ -56,8 +70,9 @@ public class ServerCommunication {
 					new CommonThread(serverSocketClient.accept(), source).start();
 					
 				}
-			} catch (IOException e1) {
+			} catch (IOException | InterruptedException e1) {
 				source.closeAllConnection();
+				
 				e1.printStackTrace();
 			}
 		}
@@ -83,7 +98,7 @@ public class ServerCommunication {
 				while (true) {
 					new CommonThread(serverSocketSensor.accept(), source).start();
 				} 
-			} catch (IOException e) {
+			} catch (IOException | InterruptedException e) {
 				source.closeAllConnection();
 				e.printStackTrace();
 			}
@@ -95,7 +110,7 @@ public class ServerCommunication {
 	 * this static class CommomThread allow to the server to treat several client or sensor requests
 	 * to each client or sensor connection, a thread is starting
 	 */
-	private static class CommonThread extends Thread {
+	public static class CommonThread extends Thread {
 		private Socket clientSocket;
 		private PrintWriter out;
 		private BufferedReader in;
@@ -107,10 +122,17 @@ public class ServerCommunication {
 		private ConvertJSON converter = new ConvertJSON();
 		private Request req = new Request();
 
-		public CommonThread(Socket socket, DataSource source)  {
+		public CommonThread(Socket socket, DataSource source) throws InterruptedException  {
 			this.clientSocket = socket;
 			
 			connection = source.giveConnection();
+			if(connection== null) {
+			while( connection == null) {
+				sleep(1500);
+			}
+			notifyAll();
+			connection = source.giveConnection();}
+			
 			
 			
 			//System.out.println("test");
@@ -121,6 +143,9 @@ public class ServerCommunication {
 		 */
 		public void interrupt() {
 			running.set(false);
+			
+			
+			
 		}
 
 		/**
@@ -238,10 +263,12 @@ public class ServerCommunication {
 						}
 
 
-					}
+                								}
 					System.out.println("------ END of communication -------");
-					
 					source.returnConnection(connection);
+					;
+
+
 					in.close();
 					out.close();
 					clientSocket.close();

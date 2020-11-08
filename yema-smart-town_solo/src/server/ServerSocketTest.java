@@ -5,6 +5,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import connection.PropertiesFileReader;
+import server.ServerCommunication.CommonThread;
 /**
  * 
  * this class launch the server with multi port
@@ -26,8 +27,10 @@ public static void main (String[] args) {
 			System.out.println("\n");
 			
 			ServerCommunication server = new ServerCommunication();
+			
 
 			server.start(SERVER_PORT_CLIENT, SERVER_PORT_AQS); 
+			server.stop(SERVER_PORT_CLIENT, SERVER_PORT_AQS);
 			
 		} catch (IOException e) {}
 		
