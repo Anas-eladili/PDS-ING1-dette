@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package client;
 
 import java.sql.Connection;
@@ -22,7 +18,7 @@ import common.ConvertJSON;
 import common.Request;
 import common.Response;
 import common.RetractableBollard;
-import common_aqs_client.CommunicationWithServer;
+
 import connection.PropertiesFileReader;
 
 import client.Crud;
@@ -42,6 +38,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.Color;
+import java.awt.SystemColor;
 
 /**
  *
@@ -49,16 +46,7 @@ import java.awt.Color;
  */
 public class Crud extends javax.swing.JFrame {
 
-	/**
-	 * Creates new form Crud
-	 */
-	/*
-	 * private Logger LOGGER;
-	 * 
-	 * @SuppressWarnings("unused") private PropertiesFileReader serveconfig; final
-	 * int SERVER_PORT; final String SERVER_ADDRESS; private ClientCommunication
-	 * client;
-	 */
+	
 
 	ArrayList<RetractableBollard> bollardinfo = new ArrayList<>();
 	CommunicationWithServer client ;
@@ -98,6 +86,7 @@ public class Crud extends javax.swing.JFrame {
 		jScrollPane1 = new javax.swing.JScrollPane();
 		tblBollard = new javax.swing.JTable();
 		btnSave = new javax.swing.JButton();
+		btnSave.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnSave.setBackground(new Color(0, 0, 128));
 		btnSave.setForeground(new Color(0, 0, 128));
 		btnUpdate = new javax.swing.JButton();
@@ -321,7 +310,7 @@ public class Crud extends javax.swing.JFrame {
 		if (!Address.isEmpty() && !isActive.toString().isEmpty() && !state.toString().isEmpty()
 				&& !way.toString().isEmpty() && !id.toString(id).isEmpty()) {
 			try {
-				//CommunicationWithServer client = new CommunicationWithServer();
+				
 				final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
 				final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
 
@@ -329,10 +318,7 @@ public class Crud extends javax.swing.JFrame {
 
 				Request req = new Request();
 				RetractableBollard bollard = new RetractableBollard();
-				/*
-				 * bollard.setId(id); bollard.setAddress(Address); bollard.setActive(isActive);
-				 * bollard.setState(state); bollard.setWay(way);
-				 */
+				
 				req.setSource("client");
 				req.setOperation_type("selectID");
 				req.setTarget("retractablebollard");
@@ -413,13 +399,7 @@ public class Crud extends javax.swing.JFrame {
 				resp = client.sendMessage(req);
 				ArrayList<String> info = resp.getValues();
 				if (!info.isEmpty()) {
-					/*
-					 * Integer id1 = Integer.parseInt(txtId.getText()); String Address1 =
-					 * txtAddress.getText().trim(); Boolean isActive1 =
-					 * Boolean.parseBoolean(txtisActive.getText()); Boolean state1 =
-					 * Boolean.parseBoolean(txtState.getText()); Boolean way1 =
-					 * Boolean.parseBoolean(txtWay.getText());
-					 */
+					
 
 					update(id, Address, isActive, state, way, client);
 
@@ -635,13 +615,7 @@ public class Crud extends javax.swing.JFrame {
 
 		}
 
-		/*
-		 * for (RetractableBollard bollard : bollardinfo) { Object[] row = new
-		 * Object[5]; row[0] = bollard.getId(); row[1] = bollard.getAddress(); row[2] =
-		 * bollard.isActive(); row[3] = bollard.isState(); row[4] = bollard.isWay();
-		 * 
-		 * model.addRow(row); }
-		 */
+		
 
 		catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -654,14 +628,7 @@ public class Crud extends javax.swing.JFrame {
 	 * @param args the command line arguments
 	 */
 	public static void main(String args[]) {
-		/* Set the Nimbus look and feel */
-		// <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
-		// (optional) ">
-		/*
-		 * If Nimbus (introduced in Java SE 6) is not available, stay with the default
-		 * look and feel. For details see
-		 * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-		 */
+		
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {

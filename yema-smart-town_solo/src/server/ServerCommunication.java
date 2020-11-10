@@ -41,8 +41,7 @@ public class ServerCommunication {
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException ex) {}
-		new ThreadClient(portClient).stop();
-		new ThreadSensor(portSensor).stop();
+		
 		
 
 		
@@ -125,13 +124,7 @@ public class ServerCommunication {
 		public CommonThread(Socket socket, DataSource source) throws InterruptedException  {
 			this.clientSocket = socket;
 			
-			connection = source.giveConnection();
-			if(connection== null) {
-			while( connection == null) {
-				sleep(1500);
-			}
-			notifyAll();
-			connection = source.giveConnection();}
+			
 			
 			
 			
@@ -156,7 +149,20 @@ public class ServerCommunication {
 		@SuppressWarnings({ "static-access", "unchecked" })
 		public void run()  {
 			running.set(true);
+			connection = source.giveConnection();
+			if(connection== null) {
+			while( connection == null) {
+				try {
+					sleep(1500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			notifyAll();
+			connection = source.giveConnection();}
 			while (running.get()) {
+				
 				try {	
 					ObjectMapper mapper = new ObjectMapper();
 					out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -265,7 +271,7 @@ public class ServerCommunication {
 
                 								}
 					System.out.println("------ END of communication -------");
-					source.returnConnection(connection);
+					
 					;
 
 
@@ -278,6 +284,7 @@ public class ServerCommunication {
 				} catch (IOException e) {}	
 			} //end while 
 			running.set(true);
+			source.returnConnection(connection);
 
 		}
 	}

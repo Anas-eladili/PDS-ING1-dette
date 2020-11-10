@@ -20,27 +20,26 @@ import rectractable_bollard_vehicule_sensor.SensorOperation;
 public class TestMainSocket {
 	 
 	@SuppressWarnings("resource")
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args) throws InterruptedException, IOException {
 		
 		Logger LOGGER = Logger.getLogger(TestMainSocket.class.getName());
 		PropertiesFileReader serveconfig = new PropertiesFileReader();
 		serveconfig.initServer();
-		
-		
 		final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
 		final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
+		ClientCommunication client = new ClientCommunication();
+		client.startConnection(SERVER_ADDRESS, SERVER_PORT);
 		
 		try {
-			JDBCConnectionPool pool= new JDBCConnectionPool() ;
+			
 			System.out.println("\n");
 			LOGGER.log(Level.INFO, "*** Client Program Beginning ***");
 			System.out.println("\n");
 			ConvertJSON converter = new ConvertJSON();
-			ClientCommunication client = new ClientCommunication();
+			
 			/*while(pool.connections.isEmpty()) {
 				System.out.println( " wait ");}*/
-			client.startConnection(SERVER_ADDRESS, SERVER_PORT);
-			
+						
 			
 			
 			
@@ -68,10 +67,11 @@ public class TestMainSocket {
 			System.out.println("********************************************************************************");
 			System.out.println("************************* WELCOME TO CLIENT MENU *******************************");
 			System.out.println("********************************************************************************");
-		
+			
 			boolean fin = false;
 			System.out.print("Please, choose from the menu -> "); String user = enterName.nextLine();
 			
+
 			while (!fin) {
 				System.out.println(user + ". What do you want to do ? ");
 				

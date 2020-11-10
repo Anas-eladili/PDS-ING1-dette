@@ -65,59 +65,11 @@ public class ConvertJSON {
 	
 	
 	
-	public String AlertToJson(Alert alert) {
-		String jsonString = "";
-		try {
-			jsonString = mapper.writeValueAsString(alert);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		return jsonString;
-	}
-	
-	public Alert JsontoAlert(String jsonString) {
-		Alert alert = new Alert();
-		try {
-			alert = mapper.readValue(jsonString, Alert.class);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return alert;
-	}
 	
 		
 	
 	
-	public String ConfigToJson(DeviceConfigAir config) {
-		String jsonString = "";
-		try {
-			jsonString = mapper.writeValueAsString(config);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		return jsonString;
-	}
 	
-	public DeviceConfigAir JsontoConfig(String jsonString) {
-		DeviceConfigAir config = new DeviceConfigAir();
-		try {
-			config = mapper.readValue(jsonString, DeviceConfigAir.class);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return config;
-	}
-	
-	
-	public DataAirAVG JsontoDataAVG(String jsonString) {
-		DataAirAVG dataAVG = new DataAirAVG();
-		try {
-			dataAVG = mapper.readValue(jsonString, DataAirAVG.class);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return dataAVG;
-	}
 	public String BollardToJson(RetractableBollard bollard) {
 		String jsonString = "" ;
 		try { 
@@ -183,25 +135,7 @@ public class ConvertJSON {
 		return bollard;
 		}
 	
-	public String DeviceConfigNbCartoJson(DeviceConfigNbCar device) {
-		String jsonString = "";
-	try {
-		jsonString = mapper.writeValueAsString(device);
-	} catch (JsonProcessingException e) {
-		e.printStackTrace();
-	}
-	return jsonString;
-		}
 	
-	public DeviceConfigNbCar JsontoDeviceConfigNbCar(String jsonString) {
-		DeviceConfigNbCar device = new DeviceConfigNbCar();
-	try {
-		device = mapper.readValue(jsonString, DeviceConfigNbCar.class);
-	} catch (IOException e) {
-		e.printStackTrace();
-	}
-	return device;
-		}
     public VehicleSensor JsontoVehicleSensor(String jsonString) {
     	VehicleSensor sensor = new VehicleSensor();
     

@@ -16,7 +16,7 @@ import common.RetractableBollard;
 import common.VehicleSensor;
 import server.CarDAO;
 
-import common.DeviceConfigNbCar;
+
 import common.Request;
 import common.Response;
 public class RequestSensor {
@@ -71,24 +71,7 @@ public class RequestSensor {
 	}
 	// merthode qui renvoie objet confignbcar donnant le nombre de voiture autorisé dans la ville 
 	
-	public DeviceConfigNbCar getNb() {
-		
-		Request req = new Request();
-	req.setOperation_type("select");
-	req.setSource("NbCar");
-	req.setTarget("DeviceConfigNbCar");
-		
-	try {
-		communication.startConnection(communication.getADDRESS(), communication.getPORTAQS());
-		Response resp = communication.sendMessage(req);
-		DeviceConfigNbCar DeviceConfigNbCar = converter.JsontoDeviceConfigNbCar(resp.getValues().get(resp.getValues().size() - 1));
-		
-		communication.stopConnection();
-		return DeviceConfigNbCar;
-	} catch (IOException e) {
-		e.printStackTrace();
-		return null;
-	  }}
+
 	
 	
 

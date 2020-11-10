@@ -1,8 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
+ 
 package client;
 
 import java.sql.Connection;
@@ -23,7 +20,7 @@ import common.ConvertJSON;
 import common.Request;
 import common.Response;
 import common.RetractableBollard;
-import common_aqs_client.CommunicationWithServer;
+
 import connection.PropertiesFileReader;
 
 import client.CrudCar;
@@ -81,9 +78,7 @@ public class CrudCar extends javax.swing.JFrame {
 		
 		
 		
-		/*final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
-		final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
-		client.startConnection(SERVER_ADDRESS, SERVER_PORT);*/
+		
 		
 		
 		
@@ -382,7 +377,7 @@ public class CrudCar extends javax.swing.JFrame {
           
           if (  !isInTheCity.toString().isEmpty()   ) {
               try {
-            	 // CommunicationWithServer client = new CommunicationWithServer();
+            	
               	final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
           		final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
              		
@@ -395,18 +390,14 @@ public class CrudCar extends javax.swing.JFrame {
               	
               	Request req = new Request();
           		Car car = new Car();
-          		/*bollard.setId(id);
-          		bollard.setAddress(Address);
-          		bollard.setActive(isActive);
-          		bollard.setState(state);
-          		bollard.setWay(way);*/
+          		
           		req.setSource("client");			
           		req.setOperation_type("selectID");
           		req.setTarget("car");
           		req.setObj(id.toString());
           		
           		
-          		//client.startConnection(SERVER_ADDRESS, SERVER_PORT);
+          		
           		
           		Response resp= new Response();
           		
@@ -414,11 +405,7 @@ public class CrudCar extends javax.swing.JFrame {
           		resp = client.sendMessage(req);
           		ArrayList<String> info = resp.getValues();
                 if (!info.isEmpty() ) {
-                	/*Integer id1 = Integer.parseInt(txtId.getText());
-                    String Address1 = txtAddress.getText().trim();
-                    Boolean isActive1 = Boolean.parseBoolean(txtisActive.getText()); 
-                    Boolean state1 = Boolean.parseBoolean(txtState.getText());
-                    Boolean way1 = Boolean.parseBoolean(txtWay.getText());*/
+                
                 	
                 	
                     update(id, isInTheCity, client);
@@ -444,14 +431,14 @@ public class CrudCar extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     //set the values of a row to the textfields
-    private void tblStudentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblStudentsMouseClicked
+    private void tblStudentsMouseClicked(java.awt.event.MouseEvent evt) {
         // TODO add your handling code here:
         int i = tblBollard.getSelectedRow();
         TableModel model = tblBollard.getModel();
         txtId.setText(model.getValueAt(i, 0).toString());
         
         txtWay.setText(model.getValueAt(i, 1).toString());
-    }//GEN-LAST:event_tblStudentsMouseClicked
+    }//GEN-LAST:
 
     //handles delete button action
    private void btnDelete1ActionPerformed(java.awt.event.ActionEvent evt) throws IOException {//GEN-FIRST:event_btnDelete1ActionPerformed
@@ -488,7 +475,7 @@ public class CrudCar extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(rootPane, msg, title, JOptionPane.ERROR_MESSAGE);
     }
 
-    //method to save user to the db
+   
     public void saveUser(Integer id, Boolean isInTheCity,CommunicationWithServer client ) throws IOException {
        Car car = new Car();
     	final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
@@ -502,7 +489,7 @@ public class CrudCar extends javax.swing.JFrame {
 		req.setSource("");
 		req.setObj(converter.CarToJson(car));
 		
-		//client.startConnection(SERVER_ADDRESS, SERVER_PORT);
+		
 
 		client.sendMessage(req);
 		//client.stopConnection();
@@ -526,7 +513,7 @@ public class CrudCar extends javax.swing.JFrame {
     		req.setSource("client");
     		req.setObj(converter.CarToJson(car));
     		
-    		//client.startConnection(SERVER_ADDRESS, SERVER_PORT);
+    	
 
     		client.sendMessage(req);
     		
@@ -537,7 +524,7 @@ public class CrudCar extends javax.swing.JFrame {
             Logger.getLogger(CrudCar.class.getName()).log(Level.SEVERE, null, ex);
         }
        fetch(client);
-       //client.stopConnection();
+       
     }
 
     //delete details in the db
@@ -556,8 +543,7 @@ public class CrudCar extends javax.swing.JFrame {
     		req.setTarget("car");
     		req.setSource("client");
     		req.setObj(converter.CarToJson(car));
-    		//client.startConnection(SERVER_ADDRESS, SERVER_PORT);
-
+    		
     		client.sendMessage(req);
         	
             
@@ -565,7 +551,7 @@ public class CrudCar extends javax.swing.JFrame {
             Logger.getLogger(CrudCar.class.getName()).log(Level.SEVERE, null, ex);
         }
        fetch( client);
-      // client.stopConnection();
+      
        
     }
 
@@ -651,16 +637,7 @@ public class CrudCar extends javax.swing.JFrame {
 		}
 	            
 	            
-			 /*for (RetractableBollard bollard : bollardinfo) {
-            Object[] row = new Object[5];
-            row[0] = bollard.getId();
-            row[1] = bollard.getAddress();
-            row[2] = bollard.isActive();
-            row[3] = bollard.isState();
-            row[4] = bollard.isWay();
-            
-            model.addRow(row);
-            }*/
+			 
 			
 		catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -671,15 +648,9 @@ public class CrudCar extends javax.swing.JFrame {
 		}
     
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+       
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

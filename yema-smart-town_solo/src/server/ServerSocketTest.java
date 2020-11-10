@@ -30,7 +30,7 @@ public static void main (String[] args) {
 			
 
 			server.start(SERVER_PORT_CLIENT, SERVER_PORT_AQS); 
-			server.stop(SERVER_PORT_CLIENT, SERVER_PORT_AQS);
+			
 			
 		} catch (IOException e) {}
 		

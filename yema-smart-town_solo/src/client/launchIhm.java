@@ -3,19 +3,19 @@ package client;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import java.awt.GridLayout;
-import javax.swing.JTable;
 
-import common_aqs_client.CommunicationWithServer;
+
+
 import connection.PropertiesFileReader;
 
-import java.awt.BorderLayout;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+
 import java.awt.event.ActionEvent;
 import java.awt.Font;
-import javax.swing.SwingConstants;
+
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.SystemColor;
@@ -69,14 +69,7 @@ public class launchIhm {
 	 * @throws IOException 
 	 */
 	private void initialize() throws IOException {
-		/*CommunicationWithServer client = new CommunicationWithServer();
-    	
-   	 PropertiesFileReader serveconfig = new PropertiesFileReader();
-   	 serveconfig.initServer();
-   	 final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
-		final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
-		client.startConnection(SERVER_ADDRESS, SERVER_PORT);*/
-		//client.stopConnection();
+		
 		frmBollardAndTraffic = new JFrame();
 		frmBollardAndTraffic.getContentPane().setBackground(Color.GRAY);
 		frmBollardAndTraffic.getContentPane().setFont(new Font("Yu Gothic Medium", Font.BOLD, 12));
@@ -177,6 +170,6 @@ public class launchIhm {
 		frmBollardAndTraffic.getContentPane().add(lblNewLabel);
 		
 		
-		/*	client.stopConnection();*/
+		
 	}
 }

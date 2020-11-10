@@ -7,11 +7,10 @@ import javax.swing.JTable;
 
 import common.Car;
 import common.RetractableBollard;
-import common_aqs_client.CommunicationWithServer;
+
 import rectractable_bollard_vehicule_sensor.SensorOperation;
 
-import javax.swing.JSeparator;
-import javax.swing.JEditorPane;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;

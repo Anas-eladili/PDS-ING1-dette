@@ -20,7 +20,7 @@ public class JDBCConnectionPool {
 			Class.forName(driver);
 			// nombre +=1;
 
-			for (int i = 0; i < 1; i++) {
+			for (int i = 0; i<1 ; i++) {
 				myConnection = DriverManager.getConnection(file.getProperty("url"), file.getProperty("id"),
 						file.getProperty("password"));
 				connections.add(myConnection);
@@ -38,14 +38,21 @@ public class JDBCConnectionPool {
 	 * isn't any connection available, they have to wait
 	 */
 	public synchronized Connection giveConnection() {
-		System.out.println("Veuillez patientez");
-		System.out.println(" nb " + connections.size());
+		
+		
 		while (connections.isEmpty()) {
 
 			// throw new RuntimeException("Maximum pool size reached, no available
 			// connections!");
 			// if(connections.isEmpty()) {
-			sleep(1500);
+			//System.out.println(" max pool size reached");		
+			if(!connections.isEmpty()) {Connection tempConnection = connections.get(0);
+			// usedconnections.add(tempConnection);
+			System.out.println(" nb connexions crées:" + connections.size());
+			connections.remove(0);
+			
+			return tempConnection;
+			}
 
 		}
 
@@ -54,7 +61,7 @@ public class JDBCConnectionPool {
 		// usedconnections.add(tempConnection);
 		System.out.println(" nb connexions crées:" + connections.size());
 		connections.remove(0);
-		System.out.println(" nb connexions restente:" + connections.size());
+		if(connections.isEmpty()) {System.out.println(" max pool size reached ");}
 
 		return tempConnection;
 	}

@@ -5,10 +5,9 @@ public class Factory {
 	public static DAO getData(String target){
 		
 		
-	 	 if(target.equals("deviceconfignbcar"))
-			return new DeviceConfigNbCarDAO();
+	 	 
 		
-		else if(target.equals("retractablebollard"))
+		 if(target.equals("retractablebollard"))
 			  return new BollardDAO();
 		
 		else if (target.equals("vehiclesensor"))

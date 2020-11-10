@@ -18,7 +18,7 @@ import common.ConvertJSON;
 
 import common.Request;
 import common.VehicleSensor;
-import common_aqs_client.CommunicationWithServer;
+import client.*;
 import common.RetractableBollard;
 import connection.PropertiesFileReader;
 import rectractable_bollard_vehicule_sensor.RequestSensor;
