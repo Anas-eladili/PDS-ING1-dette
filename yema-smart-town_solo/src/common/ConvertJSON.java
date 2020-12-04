@@ -4,6 +4,11 @@ import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import common.business.Car;
+import common.business.RetractableBollard;
+import common.business.VehicleSensor;
+import common.business.infotraffic;
 /**
  * ConvertJSON is common to server and client
  * it allows to do the conversion that we need
@@ -135,7 +140,7 @@ public class ConvertJSON {
 		return bollard;
 		}
 	
-	
+																																																																												
     public VehicleSensor JsontoVehicleSensor(String jsonString) {
     	VehicleSensor sensor = new VehicleSensor();
     

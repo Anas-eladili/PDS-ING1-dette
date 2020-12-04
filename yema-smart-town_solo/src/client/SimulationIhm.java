@@ -5,17 +5,21 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JTable;
 
-import common.Car;
-import common.RetractableBollard;
-
-import rectractable_bollard_vehicule_sensor.SensorOperation;
-
+import common.*;
+import common.business.Car;
+import common.business.RetractableBollard;
+import connection.PropertiesFileReader;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+
+import business.SensorOperation;
+
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -28,6 +32,8 @@ public class SimulationIhm {
 	private JTextField textIdCar;
 	private JTextField textCarLocation;
 	private CommunicationWithServer client ;
+	private JTextField textFieldAlert;
+	private JTextField textFieldTraffic;
 
 	/**
 	 * Launch the application.
@@ -55,6 +61,7 @@ public class SimulationIhm {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 714, 494);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,11 +91,11 @@ public class SimulationIhm {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				launchIhm launchIhm = null;
+				MainClient launchIhm = null;
 				try {
 					
 
-					launchIhm = new launchIhm();
+					launchIhm = new MainClient();
 					client.stopConnection();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -105,6 +112,7 @@ public class SimulationIhm {
 				
 			}
 		});
+		
 		btnNewButton_1.setFont(new Font("Yu Gothic Medium", Font.BOLD, 13));
 		btnNewButton_1.setBounds(560, 359, 89, 31);
 		frame.getContentPane().add(btnNewButton_1);
@@ -139,6 +147,32 @@ public class SimulationIhm {
 		JLabel lblNewLabel_3 = new JLabel("car location");
 		lblNewLabel_3.setBounds(51, 221, 96, 14);
 		frame.getContentPane().add(lblNewLabel_3);
+		
+		textFieldAlert = new JTextField();
+		textFieldAlert.setBounds(504, 77, 86, 20);
+		frame.getContentPane().add(textFieldAlert);
+		textFieldAlert.setColumns(10);
+		
+		textFieldTraffic = new JTextField();
+		textFieldTraffic.setBounds(504, 121, 86, 20);
+		frame.getContentPane().add(textFieldTraffic);
+		textFieldTraffic.setColumns(10);
+		
+		JLabel lblNewLabel_4 = new JLabel("New label");
+		lblNewLabel_4.setBounds(416, 80, 46, 14);
+		frame.getContentPane().add(lblNewLabel_4);
+		
+		JLabel lblNewLabel_5 = new JLabel("New label");
+		lblNewLabel_5.setBounds(416, 124, 46, 14);
+		frame.getContentPane().add(lblNewLabel_5);
+		
+		JButton btnNewButton_2 = new JButton("Select");
+		btnNewButton_2.setBounds(348, 171, 89, 23);
+		frame.getContentPane().add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("Update");
+		btnNewButton_3.setBounds(469, 171, 89, 23);
+		frame.getContentPane().add(btnNewButton_3);
 	}
 	public void alert(String msg) {
 		JOptionPane.showMessageDialog(frame, msg);
@@ -177,6 +211,61 @@ public class SimulationIhm {
 		// TODO Auto-generated method stub
 		
 	}
+	private void fetch(CommunicationWithServer client) throws IOException {
+
+		PropertiesFileReader serveconfig = new PropertiesFileReader();
+		serveconfig.initServer();
+
+		
+
+		bollardinfo.clear();
+		Request req = new Request();
+
+		ConvertJSON converter = new ConvertJSON();
+		req.setSource("client");
+		req.setOperation_type("select");
+		req.setTarget("retractablebollard");
+		
+
+		//client.startConnection(SERVER_ADDRESS, SERVER_PORT);
+		
+		Response resp = new Response();
+		try {
+
+			resp = client.sendMessage(req);
+			
+			ArrayList<String> databollard = resp.getValues();
+			ArrayList<RetractableBollard> data = new ArrayList<RetractableBollard>();
+
+			for (int i = 0; i < databollard.size(); i++) {
+				data.add(converter.JsonToBollard(databollard.get(i)));
+
+			}
+
+			System.out.println("ok");
+
+			DefaultTableModel model = (DefaultTableModel) tblBollard.getModel();
+			for (int i = 0; i < data.size(); i++) {
+
+				Object[] row = new Object[5];
+				row[0] = data.get(i).getId();
+				row[1] = data.get(i).getAddress();
+				row[2] = data.get(i).isActive();
+				row[3] = data.get(i).isState();
+				row[4] = data.get(i).isWay();
+				model.addRow(row);
+			}
+
+		}
+
+		
+
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 		
 		
 	public static void main(String[] args) {
@@ -188,13 +277,13 @@ public class SimulationIhm {
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(Crud.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(Frame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(Crud.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(Frame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(Crud.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(Frame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(Crud.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(Frame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		}
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {

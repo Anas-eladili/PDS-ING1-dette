@@ -5,14 +5,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class JDBCConnectionPool {
+public class ConnectionPool {
 	private ArrayList<Connection> connections = new ArrayList<Connection>();
 	private Connection myConnection;
 	private PropertiesFileReader file = new PropertiesFileReader();
 	// private ArrayList<Connection> usedconnections = new ArrayList<Connection>();
 	// private int sizeMax = Integer.valueOf(System.getProperty("my.prop"));
 
-	public JDBCConnectionPool() {
+	public ConnectionPool() {
 		try {
 			file.initJDBC();
 			String driver = file.getProperty("driver");
@@ -20,7 +20,7 @@ public class JDBCConnectionPool {
 			Class.forName(driver);
 			// nombre +=1;
 
-			for (int i = 0; i<1 ; i++) {
+			for (int i = 0; i<3 ; i++) {
 				myConnection = DriverManager.getConnection(file.getProperty("url"), file.getProperty("id"),
 						file.getProperty("password"));
 				connections.add(myConnection);

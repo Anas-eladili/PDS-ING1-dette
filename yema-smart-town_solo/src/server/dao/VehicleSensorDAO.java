@@ -1,4 +1,4 @@
-package server;
+package server.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,9 +9,8 @@ import java.util.ArrayList;
 
 
 import common.ConvertJSON;
-
-
-import common.VehicleSensor;
+import common.business.VehicleSensor;
+import common.*;
 
 public class VehicleSensorDAO extends DAO<VehicleSensor> {
 	private ConvertJSON converter = new ConvertJSON();

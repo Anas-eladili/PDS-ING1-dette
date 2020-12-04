@@ -14,16 +14,15 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import common.Car;
+import common.*;
 import common.ConvertJSON;
 
 import common.Request;
 import common.Response;
-import common.RetractableBollard;
-
+import common.business.Car;
 import connection.PropertiesFileReader;
 
-import client.CrudCar;
+import client.Frame2;
 
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
@@ -46,7 +45,7 @@ import javax.swing.SwingConstants;
  *
  * @author ANAS
  */
-public class CrudCar extends javax.swing.JFrame {
+public class Frame2 extends javax.swing.JFrame {
 
     /**
      * Creates new form Crud
@@ -64,14 +63,14 @@ public class CrudCar extends javax.swing.JFrame {
 	
 	
 
-    public CrudCar(CommunicationWithServer client) throws IOException  {
+    public Frame2(CommunicationWithServer client) throws IOException  {
     	this.client = client;
     	getContentPane().setBackground(new Color(65, 105, 225));
         initComponents();
        
         
         
-        lOGGER = Logger.getLogger(CrudCar.class.getName());
+        lOGGER = Logger.getLogger(Frame2.class.getName());
 		
 		serveconfig.initServer();
 		
@@ -217,9 +216,9 @@ public class CrudCar extends javax.swing.JFrame {
         btnRetour.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		setVisible(false);
-				launchIhm launchIhm = null;
+				MainClient launchIhm = null;
 				try {
-					launchIhm = new launchIhm();
+					launchIhm = new MainClient();
 					client.stopConnection();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -356,7 +355,7 @@ public class CrudCar extends javax.swing.JFrame {
                 clear();
               //  client.stopConnection();
             } catch (Exception ex) {
-                Logger.getLogger(CrudCar.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Frame2.class.getName()).log(Level.SEVERE, null, ex);
             }finally {
             }
             
@@ -423,7 +422,7 @@ public class CrudCar extends javax.swing.JFrame {
                 }
 
             } catch (Exception ex) {
-                Logger.getLogger(CrudCar.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Frame2.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             alert("There is nothing to update :(","No row selected");
@@ -521,7 +520,7 @@ public class CrudCar extends javax.swing.JFrame {
         	
         	
         } catch (Exception ex) {
-            Logger.getLogger(CrudCar.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Frame2.class.getName()).log(Level.SEVERE, null, ex);
         }
        fetch(client);
        
@@ -548,7 +547,7 @@ public class CrudCar extends javax.swing.JFrame {
         	
             
         } catch (Exception ex) {
-            Logger.getLogger(CrudCar.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Frame2.class.getName()).log(Level.SEVERE, null, ex);
         }
        fetch( client);
       
@@ -659,13 +658,13 @@ public class CrudCar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CrudCar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frame2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CrudCar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frame2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CrudCar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frame2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CrudCar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Frame2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -674,7 +673,7 @@ public class CrudCar extends javax.swing.JFrame {
             try {
             	 CommunicationWithServer client = new CommunicationWithServer();
             	 
-				new CrudCar(client).setVisible(true);
+				new Frame2(client).setVisible(true);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

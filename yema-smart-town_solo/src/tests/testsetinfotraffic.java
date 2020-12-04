@@ -1,4 +1,4 @@
-package rectractable_bollard_vehicule_sensor;
+package tests;
 
 
 import java.io.IOException;
@@ -10,13 +10,13 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
 import client.ClientCommunication;
-import common.Car;
+import common.*;
 import common.ConvertJSON;
 
 import common.Request;
-import common.RetractableBollard;
+
 import common.YamlFileReader;
-import common.infotraffic;
+import common.business.infotraffic;
 import connection.PropertiesFileReader;
 
 public class testsetinfotraffic {

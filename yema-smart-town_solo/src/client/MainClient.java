@@ -20,7 +20,7 @@ import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.SystemColor;
 
-public class launchIhm {
+public class MainClient {
 
 	
 	private JFrame frmBollardAndTraffic;
@@ -32,7 +32,7 @@ public class launchIhm {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					launchIhm window = new launchIhm();
+					MainClient window = new MainClient();
 					window.frmBollardAndTraffic.setVisible(true);
 					
 				} catch (Exception e) {
@@ -60,7 +60,7 @@ public class launchIhm {
 	 * Create the application.
 	 * @throws IOException 
 	 */
-	public launchIhm() throws IOException {
+	public MainClient() throws IOException {
 		initialize();
 	}
 
@@ -83,16 +83,16 @@ public class launchIhm {
 		SensorB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				try {CrudCar c;
+				try {Frame2 c;
 				CommunicationWithServer client = new CommunicationWithServer();
 		    	
 			   	 PropertiesFileReader serveconfig = new PropertiesFileReader();
 			   	 serveconfig.initServer();
 			   	 final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
-					final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
+			final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
 					client.startConnection(SERVER_ADDRESS, SERVER_PORT);
 				
-				c = new CrudCar(client);
+				c = new Frame2(client);
 				frmBollardAndTraffic.setVisible(false);
 				c.setVisible(true);
 			} catch (IOException e1) {
@@ -112,7 +112,7 @@ public class launchIhm {
 				
 
 				
-				try {Crud c;
+				try {Frame1 c;
 				CommunicationWithServer client = new CommunicationWithServer();
 		    	
 			   	 PropertiesFileReader serveconfig = new PropertiesFileReader();
@@ -120,7 +120,7 @@ public class launchIhm {
 			   	 final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
 					final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
 					client.startConnection(SERVER_ADDRESS, SERVER_PORT);
-					c = new Crud(client);
+					c = new Frame1(client);
 					frmBollardAndTraffic.setVisible(false);
 					c.setVisible(true);
 				} catch (IOException e1) {
@@ -138,7 +138,7 @@ public class launchIhm {
 		SimulationB.setFont(new Font("Yu Gothic Medium", Font.BOLD, 13));
 		SimulationB.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) { 
-				SimulationIhm c;
+				Frame3 c;
 				
 				CommunicationWithServer client = new CommunicationWithServer();
 		    	
@@ -148,9 +148,9 @@ public class launchIhm {
 					final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
 					try {
 						client.startConnection(SERVER_ADDRESS, SERVER_PORT);
-						c = new SimulationIhm(client);
+						c = new Frame3(client);
 						frmBollardAndTraffic.setVisible(false);
-						c.getFrame().setVisible(true);
+						c.setVisible(true);
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

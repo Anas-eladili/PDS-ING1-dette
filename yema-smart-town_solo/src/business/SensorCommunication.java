@@ -1,4 +1,4 @@
-package rectractable_bollard_vehicule_sensor;
+package business;
 
 import java.io.BufferedReader;
 import java.io.IOException;

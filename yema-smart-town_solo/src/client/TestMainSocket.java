@@ -6,16 +6,17 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import common.Car;
+import business.SensorOperation;
+import common.*;
 import common.ConvertJSON;
 import common.Request;
-import common.RetractableBollard;
-import common.VehicleSensor;
-import common.infotraffic;
+import common.business.Car;
+import common.business.RetractableBollard;
+import common.business.VehicleSensor;
+import common.business.infotraffic;
 import connection.DataSource;
-import connection.JDBCConnectionPool;
+import connection.ConnectionPool;
 import connection.PropertiesFileReader;
-import rectractable_bollard_vehicule_sensor.SensorOperation;
 
 public class TestMainSocket {
 	 
@@ -338,7 +339,8 @@ public class TestMainSocket {
 										
 					} else if (rep2.equals("2")) {
 						System.out.println(" you chose INSERT, please fill up the informations you want :");
-						int id; int nbmaxcar; boolean alert;
+						int id; int nbmaxcar;
+						boolean alert;
 						infotraffic info = new infotraffic();						
 						System.out.println("id : ");
 						id = enter3.nextInt();

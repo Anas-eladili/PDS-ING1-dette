@@ -6,18 +6,14 @@ import java.util.ArrayList;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
+import common.business.Car;
+
 
 public class YamlFileReader {
 
 	
 	
-	public Index initIndex() {
-		Yaml yaml = new Yaml(new Constructor(Index.class));
-		InputStream inputStream =  this.getClass().getClassLoader().getResourceAsStream("ressources/aqs-index.yaml");
-		
-		Index index = (Index) yaml.load(inputStream);
-		return index;
-	}
+	
 	
 	
 

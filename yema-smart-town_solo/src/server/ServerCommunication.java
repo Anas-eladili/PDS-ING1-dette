@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +16,8 @@ import common.ConvertJSON;
 import common.Request;
 import common.Response;
 import connection.DataSource;
+import server.dao.Factory;
+import server.dao.infotrafficDAO;
 
 
 public class ServerCommunication {
@@ -25,14 +27,14 @@ public class ServerCommunication {
 	 * start establish the connection with clients and sensors
 	 * The server is pending a new client or sensor with two threads (for each port)
 	 */
-	public void start(int portClient, int portSensor) throws IOException {
+	public void start(int portClient) throws IOException {
 		source = new DataSource();
 
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException ex) {}
 		new ThreadClient(portClient).start();
-		new ThreadSensor(portSensor).start();
+		//new ThreadSensor(portSensor).start();
 	}
 	@SuppressWarnings("deprecation")
 	public void stop(int portClient, int portSensor) throws IOException {
@@ -56,7 +58,7 @@ public class ServerCommunication {
 	private static class ThreadClient extends Thread {
 		private ServerSocket serverSocketClient;
 		private int portClient;
-
+		Connection connection ;
 		public ThreadClient(int portClient) {
 			this.portClient = portClient;
 		}
@@ -64,9 +66,14 @@ public class ServerCommunication {
 			try {
 				serverSocketClient = new ServerSocket(portClient);
 				System.out.println("Serveur à l'écoute des clients");
-
+				
 				while (true) {
-					new CommonThread(serverSocketClient.accept(), source).start();
+					//Socket client = serverSocketClient.accept();
+					 connection = source.giveConnection();
+					new CommonThread(serverSocketClient.accept(),connection ).start();
+					DataSource.returnConnection(connection);
+					
+					
 					
 				}
 			} catch (IOException | InterruptedException e1) {
@@ -74,6 +81,7 @@ public class ServerCommunication {
 				
 				e1.printStackTrace();
 			}
+			DataSource.returnConnection(connection);
 		}
 	}
 
@@ -82,7 +90,7 @@ public class ServerCommunication {
 	 * @author anas
 	 * this thread create a new socket which is pending a new sensor on the sensor port
 	 */
-	private static class ThreadSensor extends Thread {
+	/*private static class ThreadSensor extends Thread {
 		private ServerSocket serverSocketSensor;
 		private int portSensor;
 
@@ -95,14 +103,16 @@ public class ServerCommunication {
 				serverSocketSensor = new ServerSocket(portSensor);
 				System.out.println("Serveur à l'écoute des capteurs");
 				while (true) {
-					new CommonThread(serverSocketSensor.accept(), source).start();
+					Connection connection = source.giveConnection();
+					new CommonThread(serverSocketSensor.accept(),connection ).start();
+					DataSource.returnConnection(connection);
 				} 
 			} catch (IOException | InterruptedException e) {
 				source.closeAllConnection();
 				e.printStackTrace();
 			}
 		}
-	}
+	}*/
 
 
 	/**
@@ -116,20 +126,24 @@ public class ServerCommunication {
 		private AtomicBoolean running = new AtomicBoolean(false);
 		private Connection connection;
 		private Factory factory = new Factory();
-		private Boolean flag = false ;
+		
 
 		private ConvertJSON converter = new ConvertJSON();
 		private Request req = new Request();
 
-		public CommonThread(Socket socket, DataSource source) throws InterruptedException  {
+		public CommonThread(Socket socket,Connection connection ) throws InterruptedException  {
 			this.clientSocket = socket;
+			this.connection = connection;
 			
+
 			
 			
 			
 			
 			//System.out.println("test");
 		} 
+
+		
 
 		/**
 		 * close properly the thread when run is finish
@@ -149,7 +163,7 @@ public class ServerCommunication {
 		@SuppressWarnings({ "static-access", "unchecked" })
 		public void run()  {
 			running.set(true);
-			connection = source.giveConnection();
+			/*connection = source.giveConnection();
 			if(connection== null) {
 			while( connection == null) {
 				try {
@@ -160,7 +174,7 @@ public class ServerCommunication {
 				}
 			}
 			notifyAll();
-			connection = source.giveConnection();}
+			connection = source.giveConnection();*/;
 			while (running.get()) {
 				
 				try {	
@@ -271,7 +285,7 @@ public class ServerCommunication {
 
                 								}
 					System.out.println("------ END of communication -------");
-					
+					//DataSource.returnConnection(connection);
 					;
 
 
@@ -279,13 +293,14 @@ public class ServerCommunication {
 					out.close();
 					clientSocket.close();
 					
-					this.currentThread().interrupt(); 
+					CommonThread.currentThread().interrupt(); 
 					System.out.println("Thread was interrupted");
 				} catch (IOException e) {}	
 			} //end while 
 			running.set(true);
-			source.returnConnection(connection);
+			//source.returnConnection(connection);
 
 		}
+			
 	}
 }

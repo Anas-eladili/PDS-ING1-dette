@@ -3,10 +3,10 @@ package connection;
 import java.sql.Connection;
 
 public class DataSource { 
-	private static JDBCConnectionPool pool;
+	private static ConnectionPool pool;
 	
 	public DataSource() {
-		pool = new JDBCConnectionPool();
+		pool = new ConnectionPool();
 	}
 	
 	public  Connection giveConnection() { 

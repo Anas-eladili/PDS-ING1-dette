@@ -17,11 +17,13 @@ import common.ConvertJSON;
 
 import common.Request;
 import common.Response;
-import common.RetractableBollard;
+import common.business.RetractableBollard;
+import common.business.infotraffic;
+import common.*;
 
 import connection.PropertiesFileReader;
 
-import client.Crud;
+import client.Frame3;
 
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout;
@@ -44,15 +46,15 @@ import java.awt.SystemColor;
  *
  * @author ANAS
  */
-public class Crud extends javax.swing.JFrame {
+public class Frame3 extends javax.swing.JFrame {
 
 	
 
-	ArrayList<RetractableBollard> bollardinfo = new ArrayList<>();
+	ArrayList<infotraffic> bollardinfo = new ArrayList<>();
 	CommunicationWithServer client ;
 	PropertiesFileReader serveconfig = new PropertiesFileReader();
 
-	public Crud(CommunicationWithServer client) throws IOException {
+	public Frame3(CommunicationWithServer client) throws IOException {
 		getContentPane().setBackground(new Color(65, 105, 225));
 		this.client= client;
 		initComponents();
@@ -62,7 +64,7 @@ public class Crud extends javax.swing.JFrame {
 
 		final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
 		final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
-		 lOGGER = Logger.getLogger(CrudCar.class.getName());
+		 lOGGER = Logger.getLogger(Frame2.class.getName());
 		
 		fetch(client);
 
@@ -81,8 +83,8 @@ public class Crud extends javax.swing.JFrame {
 		txtId = new javax.swing.JTextField();
 		jLabel1 = new javax.swing.JLabel();
 		jLabel2 = new javax.swing.JLabel();
-		txtAddress = new javax.swing.JTextField();
-		txtisActive = new javax.swing.JTextField();
+		txtAlert = new javax.swing.JTextField();
+		txtNbMax = new javax.swing.JTextField();
 		jScrollPane1 = new javax.swing.JScrollPane();
 		tblBollard = new javax.swing.JTable();
 		btnSave = new javax.swing.JButton();
@@ -99,27 +101,33 @@ public class Crud extends javax.swing.JFrame {
 		jLabel6.setForeground(new Color(128, 0, 0));
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		setTitle("Bollard");
+		setTitle("Simulation");
 		setResizable(false);
 
 		jLabel1.setFont(new Font("Yu Gothic Medium", Font.BOLD, 13)); // NOI18N
 		jLabel1.setText("Id");
 
 		jLabel2.setFont(new Font("Yu Gothic Medium", Font.BOLD, 13)); // NOI18N
-		jLabel2.setText("Address");
+		jLabel2.setText("AlertAirQuality");
 
 		jLabel6.setFont(new Font("Yu Gothic Medium", Font.BOLD, 16)); // NOI18N
-		jLabel6.setText("Bollard Settings");
+		jLabel6.setText("Simulation Settings");
 
 		tblBollard.setModel(
-				new DefaultTableModel(new Object[][] {}, new String[] { "Id", "Address", "isActive", "state", "way" }) {
-					Class[] columnTypes = new Class[] { Integer.class, String.class, Boolean.class, Boolean.class,
-							Boolean.class };
-
-					public Class getColumnClass(int columnIndex) {
-						return columnTypes[columnIndex];
-					}
-				});
+				new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Id", "AlertAirQuality", "NbMaxVehicle"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				Integer.class, Boolean.class, Integer.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
 		tblBollard.setCellSelectionEnabled(true);
 		tblBollard.addMouseListener(new java.awt.event.MouseAdapter() {
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -178,31 +186,19 @@ public class Crud extends javax.swing.JFrame {
 		});
 
 		jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-		jLabel6.setText("Bollard Settings");
+		jLabel6.setText("Simulation Settings");
 
-		Jlabel4 = new JLabel("State");
-		Jlabel4.setFont(new Font("Yu Gothic Medium", Font.BOLD, 13));
-
-		txtState = new JTextField();
-		txtState.setColumns(10);
-
-		JLabel jLabel5 = new JLabel("Way");
-		jLabel5.setFont(new Font("Yu Gothic Medium", Font.BOLD, 13));
-
-		txtWay = new JTextField();
-		txtWay.setColumns(10);
-
-		JLabel lblIsactive = new JLabel("isActive");
+		JLabel lblIsactive = new JLabel("NbMax");
 		lblIsactive.setFont(new Font("Yu Gothic Medium", Font.BOLD, 13));
 
 		JButton btnRetour = new JButton("Retour");
 		btnRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				launchIhm launchIhm = null;
+				MainClient launchIhm = null;
 				try {client.stopConnection();
 
-					launchIhm = new launchIhm();
+					launchIhm = new MainClient();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -212,87 +208,150 @@ public class Crud extends javax.swing.JFrame {
 			
 			}
 		});
+		
+		lblIdBollard = new JLabel("id Bollard");
+		
+		lblWayOfBollard = new JLabel("Way of bollard ");
+		
+		lblCarId = new JLabel("Car id ");
+		
+		lblCarLocation = new JLabel("Car location");
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		
+		textField_3 = new JTextField();
+		textField_3.setColumns(10);
+		
+		JButton btnNewButton = new JButton("Launch simulation");
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-		layout.setHorizontalGroup(layout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(layout.createSequentialGroup().addGap(78)
-						.addGroup(layout.createParallelGroup(Alignment.LEADING)
-								.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
-								.addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+		layout.setHorizontalGroup(
+			layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+					.addContainerGap(810, Short.MAX_VALUE)
+					.addComponent(btnRetour, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
+					.addGap(42))
+				.addGroup(layout.createSequentialGroup()
+					.addContainerGap(449, Short.MAX_VALUE)
+					.addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 229, GroupLayout.PREFERRED_SIZE)
+					.addGap(265))
+				.addGroup(layout.createSequentialGroup()
+					.addGap(78)
+					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+						.addGroup(layout.createSequentialGroup()
+							.addGroup(layout.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblIsactive)
-								.addComponent(Jlabel4, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-								.addComponent(jLabel5))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(layout.createParallelGroup(Alignment.TRAILING).addGroup(layout.createSequentialGroup()
-								.addGroup(layout.createParallelGroup(Alignment.LEADING)
-										.addGroup(layout.createSequentialGroup().addGap(16).addComponent(txtId, 188,
-												188, 188))
-										.addGroup(layout.createSequentialGroup().addGap(17)
-												.addGroup(layout.createParallelGroup(Alignment.LEADING)
-														.addComponent(txtAddress, GroupLayout.PREFERRED_SIZE, 188,
-																GroupLayout.PREFERRED_SIZE)
-														.addGroup(layout.createParallelGroup(Alignment.LEADING)
-																.addComponent(txtState, Alignment.TRAILING,
-																		GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-																.addComponent(txtWay, Alignment.TRAILING,
-																		GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-																.addComponent(txtisActive, GroupLayout.DEFAULT_SIZE,
-																		192, Short.MAX_VALUE)))))
-								.addGap(44)).addGroup(
-										layout.createSequentialGroup()
-												.addPreferredGap(ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
-												.addComponent(btnSave, GroupLayout.PREFERRED_SIZE, 72,
-														GroupLayout.PREFERRED_SIZE)
-												.addGap(61)))
-						.addGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(
-								Alignment.TRAILING,
-								layout.createSequentialGroup()
-										.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 376,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(161))
+								.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+								.addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
+							.addGroup(layout.createParallelGroup(Alignment.LEADING)
 								.addGroup(layout.createSequentialGroup()
-										.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 75,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(51)
-										.addComponent(btnDelete1, GroupLayout.PREFERRED_SIZE, 75,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(185)
-										.addComponent(btnRetour, GroupLayout.PREFERRED_SIZE, 91,
-												GroupLayout.PREFERRED_SIZE)
-										.addContainerGap())))
-				.addGroup(layout.createSequentialGroup().addContainerGap(529, Short.MAX_VALUE)
-						.addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
-						.addGap(277)));
-		layout.setVerticalGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(layout.createSequentialGroup()
-				.addGap(32).addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE).addGap(18)
-				.addGroup(layout.createParallelGroup(Alignment.LEADING).addGroup(layout.createSequentialGroup()
-						.addGap(29)
-						.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+									.addGap(1)
+									.addGroup(layout.createParallelGroup(Alignment.LEADING)
+										.addGroup(layout.createSequentialGroup()
+											.addGap(16)
+											.addComponent(txtId, 188, 188, 188))
+										.addGroup(layout.createSequentialGroup()
+											.addGap(17)
+											.addComponent(txtAlert, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE))))
+								.addGroup(layout.createSequentialGroup()
+									.addGap(18)
+									.addGroup(layout.createParallelGroup(Alignment.LEADING)
+										.addComponent(txtNbMax, GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+										.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+							.addGap(177)
+							.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+								.addGroup(layout.createSequentialGroup()
+									.addGroup(layout.createParallelGroup(Alignment.LEADING)
+										.addGroup(layout.createSequentialGroup()
+											.addComponent(btnSave, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
+											.addGap(59)
+											.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
+										.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 376, GroupLayout.PREFERRED_SIZE))
+									.addGap(60))
+								.addGroup(layout.createSequentialGroup()
+									.addComponent(btnDelete1, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+									.addGap(93))))
+						.addGroup(layout.createSequentialGroup()
+							.addComponent(lblIdBollard, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap())
+						.addGroup(layout.createSequentialGroup()
+							.addGroup(layout.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblWayOfBollard)
+								.addComponent(lblCarId)
+								.addComponent(lblCarLocation))
+							.addGap(18)
+							.addGroup(layout.createParallelGroup(Alignment.LEADING)
+								.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(688))))
+				.addGroup(layout.createSequentialGroup()
+					.addGap(424)
+					.addComponent(btnNewButton)
+					.addContainerGap(430, Short.MAX_VALUE))
+		);
+		layout.setVerticalGroup(
+			layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup()
+					.addGap(29)
+					.addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+					.addGap(3)
+					.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(layout.createSequentialGroup()
+							.addGap(65)
+							.addGroup(layout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtId, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
-						.addPreferredGap(ComponentPlacement.RELATED)
-						.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtAddress, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(lblIsactive)
-								.addComponent(txtisActive, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-						.addGap(12)
-						.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-								.addComponent(Jlabel4, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtState, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE))
-						.addGap(18)
-						.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(jLabel5)
-								.addComponent(txtWay, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(layout.createSequentialGroup().addGap(18).addComponent(jScrollPane1,
-								GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)))
-				.addGap(58)
-				.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnDelete1, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnSave, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnRetour, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
-				.addContainerGap(73, Short.MAX_VALUE)));
+								.addComponent(txtId, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(layout.createSequentialGroup()
+							.addGap(35)
+							.addComponent(jScrollPane1, 0, 0, Short.MAX_VALUE)))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtAlert, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(layout.createParallelGroup(Alignment.LEADING)
+						.addGroup(layout.createSequentialGroup()
+							.addGroup(layout.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblIsactive)
+								.addComponent(txtNbMax, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
+							.addGap(35)
+							.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblIdBollard)
+								.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(18)
+							.addGroup(layout.createParallelGroup(Alignment.LEADING)
+								.addGroup(layout.createSequentialGroup()
+									.addComponent(lblWayOfBollard)
+									.addGap(29)
+									.addComponent(lblCarId)
+									.addGap(30)
+									.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+										.addComponent(lblCarLocation)
+										.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+								.addGroup(layout.createSequentialGroup()
+									.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addGap(18)
+									.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addGap(125))
+						.addGroup(layout.createSequentialGroup()
+							.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnDelete1, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnSave, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
+							.addPreferredGap(ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
+							.addComponent(btnNewButton)
+							.addGap(14)
+							.addComponent(btnRetour, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+							.addGap(44))))
+		);
 		getContentPane().setLayout(layout);
 
 		pack();
@@ -302,13 +361,12 @@ public class Crud extends javax.swing.JFrame {
 	private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) throws IOException {// GEN-FIRST:event_btnSaveActionPerformed
 		// TODO add your handling code here:
 		Integer id = Integer.parseInt(txtId.getText()); // txtId.getText().trim();
-		String Address = txtAddress.getText().trim();
-		Boolean isActive = Boolean.parseBoolean(txtisActive.getText());
-		Boolean state = Boolean.parseBoolean(txtState.getText());
-		Boolean way = Boolean.parseBoolean(txtWay.getText());
+		Boolean Alert = Boolean.parseBoolean(txtAlert.getText());
+		Integer NbMax = Integer.parseInt(txtNbMax.getText());
+		
 
-		if (!Address.isEmpty() && !isActive.toString().isEmpty() && !state.toString().isEmpty()
-				&& !way.toString().isEmpty() && !id.toString(id).isEmpty()) {
+		if (!Alert.toString().isEmpty()
+				&& !NbMax.toString(NbMax).isEmpty() && !id.toString(id).isEmpty()) {
 			try {
 				
 				final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
@@ -317,11 +375,11 @@ public class Crud extends javax.swing.JFrame {
 				ConvertJSON converter = new ConvertJSON();
 
 				Request req = new Request();
-				RetractableBollard bollard = new RetractableBollard();
+				infotraffic infotraffic = new infotraffic();
 				
 				req.setSource("client");
 				req.setOperation_type("selectID");
-				req.setTarget("retractablebollard");
+				req.setTarget("infotraffic");
 				req.setObj(id.toString());
 
 				
@@ -334,14 +392,13 @@ public class Crud extends javax.swing.JFrame {
 
 				if (info.isEmpty()) {
 
-					saveUser(id, Address, isActive, state, way, client);
+					saveUser(id, Alert, NbMax, client);
 					DefaultTableModel model = (DefaultTableModel) tblBollard.getModel();
-					Object[] row = new Object[5];
+					Object[] row = new Object[3];
 					row[0] = id;
-					row[1] = Address;
-					row[2] = isActive;
-					row[3] = state;
-					row[4] = way;
+					row[1] = Alert;
+					row[2] = NbMax;
+					
 					model.addRow(row);
 				} else {
 					alert("Please provide a different id number", "Similar id found");
@@ -350,7 +407,7 @@ public class Crud extends javax.swing.JFrame {
 				clear();
 				//client.stopConnection();
 			} catch (Exception ex) {
-				Logger.getLogger(Crud.class.getName()).log(Level.SEVERE, null, ex);
+				Logger.getLogger(Frame3.class.getName()).log(Level.SEVERE, null, ex);
 			} finally {
 			}
 
@@ -366,14 +423,12 @@ public class Crud extends javax.swing.JFrame {
 
 	private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) throws IOException {// GEN-FIRST:event_btnUpdateActionPerformed
 		// TODO add your handling code here:
-		Integer id = Integer.parseInt(txtId.getText());
-		String Address = txtAddress.getText().trim();
-		Boolean isActive = Boolean.parseBoolean(txtisActive.getText());
-		Boolean state = Boolean.parseBoolean(txtState.getText());
-		Boolean way = Boolean.parseBoolean(txtWay.getText());
+		Integer id = Integer.parseInt(txtId.getText()); // txtId.getText().trim();
+		Boolean Alert = Boolean.parseBoolean(txtAlert.getText());
+		Integer NbMax = Integer.parseInt(txtNbMax.getText());
 
-		if (!Address.isEmpty() && !isActive.toString().isEmpty() && !state.toString().isEmpty()
-				&& !way.toString().isEmpty() && !id.toString(id).isEmpty()) {
+		if (!Alert.toString().isEmpty()
+				&& !NbMax.toString(NbMax).isEmpty() && !id.toString(id).isEmpty()) {
 			try {
 				
 				final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
@@ -382,14 +437,11 @@ public class Crud extends javax.swing.JFrame {
 				ConvertJSON converter = new ConvertJSON();
 
 				Request req = new Request();
-				RetractableBollard bollard = new RetractableBollard();
-				/*
-				 * bollard.setId(id); bollard.setAddress(Address); bollard.setActive(isActive);
-				 * bollard.setState(state); bollard.setWay(way);
-				 */
+				infotraffic infotraffic = new infotraffic();
+				
 				req.setSource("client");
 				req.setOperation_type("selectID");
-				req.setTarget("retractablebollard");
+				req.setTarget("infotraffic");
 				req.setObj(id.toString());
 
 				//client.startConnection(SERVER_ADDRESS, SERVER_PORT);
@@ -401,7 +453,7 @@ public class Crud extends javax.swing.JFrame {
 				if (!info.isEmpty()) {
 					
 
-					update(id, Address, isActive, state, way, client);
+					update(id, Alert, NbMax, client);
 
 					DefaultTableModel model = (DefaultTableModel) tblBollard.getModel();
 					model.setRowCount(0);
@@ -410,12 +462,12 @@ public class Crud extends javax.swing.JFrame {
 					alert("Update was successful");
 
 				} else {
-					alert("There is no such Bollard", "Update error");
+					alert("There is no such info", "Update error");
 					clear();
 				}
 
 			} catch (Exception ex) {
-				Logger.getLogger(Crud.class.getName()).log(Level.SEVERE, null, ex);
+				Logger.getLogger(Frame3.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		} else {
 			alert("There is nothing to update :(", "No row selected");
@@ -428,10 +480,9 @@ public class Crud extends javax.swing.JFrame {
 		int i = tblBollard.getSelectedRow();
 		TableModel model = tblBollard.getModel();
 		txtId.setText(model.getValueAt(i, 0).toString());
-		txtAddress.setText(model.getValueAt(i, 1).toString());
-		txtisActive.setText(model.getValueAt(i, 2).toString());
-		txtState.setText(model.getValueAt(i, 3).toString());
-		txtWay.setText(model.getValueAt(i, 4).toString());
+		txtAlert.setText(model.getValueAt(i, 1).toString());
+		txtNbMax.setText(model.getValueAt(i, 2).toString());
+		
 	}// GEN-LAST:event_tblStudentsMouseClicked
 
 	// handles delete button action
@@ -472,22 +523,21 @@ public class Crud extends javax.swing.JFrame {
 	}
 
 	// method to save user to the db
-	public void saveUser(Integer id, String Address, Boolean isActive, Boolean state, Boolean way,
+	public void saveUser(Integer id, Boolean Alert, Integer NbMax,
 			CommunicationWithServer client) throws IOException {
 
 		
-		RetractableBollard bollard = new RetractableBollard();
+		infotraffic bollard = new infotraffic();
 		Request req = new Request();
 		ConvertJSON converter = new ConvertJSON();
 		bollard.setId(id);
-		bollard.setAddress(Address);
-		bollard.setActive(isActive);
-		bollard.setWay(way);
-		bollard.setState(state);
+		bollard.setAlert(Alert);
+		bollard.setNbmaxcar(NbMax);
+		
 		req.setOperation_type("insert");
-		req.setTarget("retractablebollard");
+		req.setTarget("infotraffic");
 		req.setSource("");
-		req.setObj(converter.BollardToJson(bollard));
+		req.setObj(converter.infotrafficToJson(bollard));
 
 		//client.startConnection(SERVER_ADDRESS, SERVER_PORT);
 
@@ -497,33 +547,33 @@ public class Crud extends javax.swing.JFrame {
 	}
 
 	// update the db
-	public void update(Integer id, String Address, Boolean isActive, Boolean state, Boolean way,
+	public void update(Integer id, Boolean Alert,Integer NbMax,
 			CommunicationWithServer client) throws IOException {
 		try {
 
 			final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
 			final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
-			RetractableBollard bollard = new RetractableBollard();
-			Request req = new Request();
+			
+			
 			ConvertJSON converter = new ConvertJSON();
 
+			infotraffic bollard = new infotraffic();
+			Request req1 = new Request();
+			ConvertJSON converter1 = new ConvertJSON();
 			bollard.setId(id);
-			bollard.setAddress(Address);
-			bollard.setActive(isActive);
-
-			bollard.setState(state);
-			bollard.setWay(way);
-			req.setOperation_type("update");
-			req.setTarget("retractablebollard");
-			req.setSource("client");
-			req.setObj(converter.BollardToJson(bollard));
+			bollard.setAlert(Alert);
+			bollard.setNbmaxcar(NbMax);
+			req1.setOperation_type("update");
+			req1.setTarget("infotraffic");
+			req1.setSource("client");
+			req1.setObj(converter1.infotrafficToJson(bollard));
 
 			//client.startConnection(SERVER_ADDRESS, SERVER_PORT);
 
-			client.sendMessage(req);
+			client.sendMessage(req1);
 
 		} catch (Exception ex) {
-			Logger.getLogger(Crud.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(Frame3.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		fetch(client);
 	//	client.stopConnection();
@@ -535,23 +585,23 @@ public class Crud extends javax.swing.JFrame {
 
 			final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
 			final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
-			RetractableBollard bollard = new RetractableBollard();
+			infotraffic infotraffic= new infotraffic();
 			Request req = new Request();
 			ConvertJSON converter = new ConvertJSON();
 
-			bollard.setId(Integer.parseInt(id));
+			infotraffic.setId(Integer.parseInt(id));
 
 			req.setOperation_type("delete");
-			req.setTarget("retractablebollard");
+			req.setTarget("infotraffic");
 			req.setSource("client");
-			req.setObj(converter.BollardToJson(bollard));
+			req.setObj(converter.infotrafficToJson(infotraffic));
 
 		//	client.startConnection(SERVER_ADDRESS, SERVER_PORT);
 
 			client.sendMessage(req);
 
 		} catch (Exception ex) {
-			Logger.getLogger(Crud.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(Frame3.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		fetch(client);
 		//client.stopConnection();
@@ -561,27 +611,28 @@ public class Crud extends javax.swing.JFrame {
 	// method to clear the txt fields
 	private void clear() {
 		txtId.setText("");
-		txtAddress.setText("");
-		txtisActive.setText("");
-		txtState.setText("");
-		txtWay.setText("");
+		txtAlert.setText("");
+		txtNbMax.setText("");
+		
 	}
 
 	// fetch
 	private void fetch(CommunicationWithServer client) throws IOException {
 
 		PropertiesFileReader serveconfig = new PropertiesFileReader();
+		
 		serveconfig.initServer();
 
 		
 
 		bollardinfo.clear();
+		
 		Request req = new Request();
 
 		ConvertJSON converter = new ConvertJSON();
 		req.setSource("client");
 		req.setOperation_type("select");
-		req.setTarget("retractablebollard");
+		req.setTarget("infotraffic");
 		
 
 		//client.startConnection(SERVER_ADDRESS, SERVER_PORT);
@@ -592,24 +643,23 @@ public class Crud extends javax.swing.JFrame {
 			resp = client.sendMessage(req);
 			
 			ArrayList<String> databollard = resp.getValues();
-			ArrayList<RetractableBollard> data = new ArrayList<RetractableBollard>();
+			ArrayList<infotraffic> data = new ArrayList<infotraffic>();
 
 			for (int i = 0; i < databollard.size(); i++) {
-				data.add(converter.JsonToBollard(databollard.get(i)));
+				data.add(converter.JsonToinfotraffic(databollard.get(i)));
 
 			}
 
-			System.out.println("ok");
+			
 
 			DefaultTableModel model = (DefaultTableModel) tblBollard.getModel();
 			for (int i = 0; i < data.size(); i++) {
 
-				Object[] row = new Object[5];
+				Object[] row = new Object[3];
 				row[0] = data.get(i).getId();
-				row[1] = data.get(i).getAddress();
-				row[2] = data.get(i).isActive();
-				row[3] = data.get(i).isState();
-				row[4] = data.get(i).isWay();
+				row[1] = data.get(i).getAlert();
+				row[2] = data.get(i).getNbmaxcar();
+				
 				model.addRow(row);
 			}
 
@@ -637,13 +687,13 @@ public class Crud extends javax.swing.JFrame {
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(Crud.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(Frame3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(Crud.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(Frame3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(Crud.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(Frame3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(Crud.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(Frame3.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		}
 		// </editor-fold>
 
@@ -651,7 +701,7 @@ public class Crud extends javax.swing.JFrame {
 		java.awt.EventQueue.invokeLater(() -> {
 			try {
 				 CommunicationWithServer client = new CommunicationWithServer();
-				new Crud(client).setVisible(true);
+				new Frame3(client).setVisible(true);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -669,10 +719,15 @@ public class Crud extends javax.swing.JFrame {
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JTable tblBollard;
 	private javax.swing.JTextField txtId;
-	private javax.swing.JTextField txtisActive;
-	private javax.swing.JTextField txtAddress;
-	private JTextField txtState;
-	private JTextField txtWay;
+	private javax.swing.JTextField txtNbMax;
+	private javax.swing.JTextField txtAlert;
 	private Logger lOGGER;
-	private JLabel Jlabel4;
+	private JLabel lblIdBollard;
+	private JLabel lblWayOfBollard;
+	private JLabel lblCarId;
+	private JLabel lblCarLocation;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
 }

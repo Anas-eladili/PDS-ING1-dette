@@ -1,4 +1,4 @@
-package server;
+package server.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,9 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import common.Car;
+import common.*;
 import common.ConvertJSON;
-import common.RetractableBollard;
+import common.business.Car;
+
 
 public class CarDAO extends DAO<Car>{
 	private ConvertJSON converter = new ConvertJSON();
@@ -100,7 +101,7 @@ try {
 		ArrayList<String> list = new ArrayList<String>();
 		try {
 			Statement myRequest = connection.createStatement();
-			ResultSet result = myRequest.executeQuery("SELECT * FROM car where isInTheCity = true ");
+			ResultSet result = myRequest.executeQuery("SELECT * FROM car  ");
 			
 			while(result.next()) {
 				Car car = new Car();

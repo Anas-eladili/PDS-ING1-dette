@@ -1,4 +1,4 @@
-package server;
+package server.dao;
 
 import java.sql.Connection;
 import java.util.ArrayList;

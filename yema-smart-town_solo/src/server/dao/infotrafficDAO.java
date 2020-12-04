@@ -1,4 +1,4 @@
-package server;
+package server.dao;
 
 
 
@@ -10,8 +10,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import common.ConvertJSON;
-import common.RetractableBollard;
-import common.infotraffic;
+import common.business.Car;
+import common.business.infotraffic;
+import common.*;
 
 public class infotrafficDAO extends DAO<infotraffic>{
 	private ConvertJSON converter = new ConvertJSON();
@@ -23,11 +24,11 @@ public class infotrafficDAO extends DAO<infotraffic>{
 
 		try {
 			preparedStatement = connection.prepareStatement("INSERT INTO infotraffic(id, alert, nbmaxcar) VALUES(?, ?,?)");
-			
+			preparedStatement.setInt(1, info.getId());
 			preparedStatement.setBoolean(2, info.getAlert());
 			preparedStatement.setInt(3, info.getNbmaxcar());
-			preparedStatement.setInt(1, info.getId());
 			
+			preparedStatement.executeUpdate();
 			
 			return true; 	
 		} catch (SQLException e) {
@@ -60,10 +61,12 @@ try {
 		PreparedStatement preparedStatement = null;
 		infotraffic info = converter.JsonToinfotraffic(device);
 		try {
-			preparedStatement = connection.prepareStatement("UPDATE infotraffic SET alert = ?, nbcarmax = ?,  WHERE id = ?");
-			preparedStatement.setInt(1, info.getId());
-			preparedStatement.setInt(3, info.getNbmaxcar());
-			preparedStatement.setBoolean(2, info.getAlert());
+			preparedStatement = connection.prepareStatement("UPDATE infotraffic SET alert = ?, nbmaxcar = ?  WHERE id = ?");
+			preparedStatement.setBoolean(1, info.getAlert());
+			
+			preparedStatement.setInt(2, info.getNbmaxcar());
+			preparedStatement.setInt(3, info.getId());
+			
 			
 			
 			preparedStatement.executeUpdate();
@@ -78,14 +81,58 @@ try {
 
 	@Override
 	public ArrayList<String> selectID(String id, Connection connection) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<String> list = new ArrayList<String>();
+		int idinfo = Integer.valueOf(id);
+
+		try {
+			Statement myRequest = connection.createStatement();
+			ResultSet result = myRequest.executeQuery("SELECT * FROM infotraffic WHERE id = " + idinfo);
+
+			while(result.next()) {
+				infotraffic bollard = new infotraffic();
+				
+				bollard.setId(result.getInt(1));
+				
+				bollard.setAlert(result.getBoolean(2));
+				bollard.setNbmaxcar(result.getInt(3));
+				
+
+
+				String json = converter.infotrafficToJson(bollard);
+				list.add(json);
+			}
+
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();}
+		return list;
+			
 	}
 
 	@Override
 	public ArrayList<String> select(Connection connection) {
-		// TODO Auto-generated method stub
-		return null; 
+		ArrayList<String> list = new ArrayList<String>();
+		try {
+			Statement myRequest = connection.createStatement();
+			ResultSet result = myRequest.executeQuery("SELECT * FROM infotraffic ");
+			
+			while(result.next()) {
+				infotraffic info = new infotraffic();
+				
+				info.setId(result.getInt(1));
+				info.setAlert(result.getBoolean(2));
+				info.setNbmaxcar(result.getInt(3));
+				
+				
+				String json = converter.infotrafficToJson(info);
+				list.add(json);
+			}
+			
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace(); }
+			
+		return list;
 	}
 	public ArrayList<String> selectnbmax(Connection connection) {
 		// TODO Auto-generated method stub

@@ -1,4 +1,4 @@
-package server;
+package server.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import common.ConvertJSON;
+import common.business.RetractableBollard;
+import common.*;
 
-
-import common.RetractableBollard;
 
 public class BollardDAO extends DAO<RetractableBollard>{
 	private ConvertJSON converter = new ConvertJSON();

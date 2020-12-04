@@ -1,4 +1,4 @@
-package rectractable_bollard_vehicule_sensor;
+package tests;
 
 
 
@@ -11,11 +11,12 @@ import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
 import client.ClientCommunication;
-import common.Car;
+import common.*;
 import common.ConvertJSON;
 
 import common.Request;
 import common.YamlFileReader;
+import common.business.Car;
 import connection.PropertiesFileReader;
 
 public class testAddCar {

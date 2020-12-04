@@ -1,4 +1,4 @@
-package rectractable_bollard_vehicule_sensor;
+package business;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,16 +9,17 @@ import java.util.HashMap;
 
 
 
-import common.Car;
+
 import common.ConvertJSON;
 
-import common.RetractableBollard;
-import common.VehicleSensor;
-import server.CarDAO;
+
+
 
 
 import common.Request;
 import common.Response;
+import common.business.RetractableBollard;
+import common.business.VehicleSensor;
 public class RequestSensor {
 	
 	private SensorCommunication communication ; 

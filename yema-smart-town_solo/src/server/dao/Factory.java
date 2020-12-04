@@ -1,4 +1,5 @@
-package server;
+package server.dao;
+
 
 public class Factory {
 	@SuppressWarnings("rawtypes")

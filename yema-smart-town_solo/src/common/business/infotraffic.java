@@ -1,4 +1,4 @@
-package common;
+package common.business;
 
 public class infotraffic {
 	private int id ;

@@ -11,10 +11,10 @@ import server.ServerCommunication.CommonThread;
  * this class launch the server with multi port
  *
  */
-public class ServerSocketTest {
+public class ServerMain {
 public static void main (String[] args) {
 		
-		Logger LOGGER = Logger.getLogger(ServerSocketTest.class.getName());
+		Logger LOGGER = Logger.getLogger(ServerMain.class.getName());
 		PropertiesFileReader serveconfig = new PropertiesFileReader();
 		serveconfig.initServer();
 		
@@ -29,7 +29,7 @@ public static void main (String[] args) {
 			ServerCommunication server = new ServerCommunication();
 			
 
-			server.start(SERVER_PORT_CLIENT, SERVER_PORT_AQS); 
+			server.start(SERVER_PORT_CLIENT); 
 			
 			
 		} catch (IOException e) {}

@@ -1,28 +1,30 @@
-package rectractable_bollard_vehicule_sensor;
+package business;
 
 import java.awt.List;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import business.RequestSensor;
 import client.ClientCommunication;
 
 import java.util.* ;
 
 
-import common.Car;
+import common.*;
 import common.ConvertJSON;
 
 
 
 
 import common.Request;
-import common.VehicleSensor;
+import common.business.Car;
+import common.business.RetractableBollard;
+import common.business.VehicleSensor;
 import client.*;
-import common.RetractableBollard;
+
 import connection.PropertiesFileReader;
-import rectractable_bollard_vehicule_sensor.RequestSensor;
-import server.CarDAO;
+
 
 public class SensorOperation {
 	
