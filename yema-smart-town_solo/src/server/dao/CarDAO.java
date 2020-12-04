@@ -120,6 +120,29 @@ try {
 			
 		return list;
 	}
+	public ArrayList<String> selectincity(Connection connection) {
+		ArrayList<String> list = new ArrayList<String>();
+		try {
+			Statement myRequest = connection.createStatement();
+			ResultSet result = myRequest.executeQuery("SELECT * FROM car where isInTheCity = true  ");
+			
+			while(result.next()) {
+				Car car = new Car();
+				
+				car.setId(result.getInt(1));
+				car.setIsInTheCity(result.getBoolean(2));
+				
+				
+				String json = converter.CarToJson(car);
+				list.add(json);
+			}
+			
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace(); }
+			
+		return list;
+	}
 
 	@Override
 	public ArrayList<String> selectID(String id, Connection connection) {

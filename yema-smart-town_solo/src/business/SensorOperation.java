@@ -6,18 +6,11 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import business.RequestSensor;
-import client.ClientCommunication;
 
 import java.util.* ;
 
 
 import common.*;
-import common.ConvertJSON;
-
-
-
-
-import common.Request;
 import common.business.Car;
 import common.business.RetractableBollard;
 import common.business.VehicleSensor;
@@ -35,6 +28,8 @@ public class SensorOperation {
 	private int nbVehicule; 
 	private Connection connection;
 	private ConvertJSON converter = new ConvertJSON();
+	CommunicationWithServer communication ;
+	
 	
 
 	
@@ -50,6 +45,11 @@ public class SensorOperation {
 		 System.out.println("car added successfully");
 		 }
 	
+	public SensorOperation(CommunicationWithServer communication) {
+		super();
+		this.communication = communication;
+	}
+
 	public synchronized void carexit(Car car ,CommunicationWithServer communication) throws IOException {
 		 Request request3= new Request();
 		 request3.setOperation_type("delete");
@@ -75,7 +75,7 @@ public class SensorOperation {
 	public int actualcarnb (CommunicationWithServer communication) throws IOException
 	{
 		Request request2= new Request();
-		 request2.setOperation_type("select");
+		 request2.setOperation_type("selectincity");
 		 request2.setTarget("car"); 
 		 request2.setSource("client");                                                //code pour savoir nb de vehicule 
 		 communication.sendMessage(request2);
@@ -98,16 +98,35 @@ public class SensorOperation {
 		
 		
 		
-		public synchronized void start(RetractableBollard bollard , Car car ) throws InterruptedException {
+		public synchronized void start(RetractableBollard bollard , Car car ,CommunicationWithServer communication) throws InterruptedException {
 	
 		
 		
 
 		try {
-			CommunicationWithServer communication= new CommunicationWithServer();
-			communication.startConnection(communication.getADDRESS(), communication.getPORTAQS());
+			
+			
 			Request request = new Request();
-			boolean end = true;
+			request.setSource("client");			
+			request.setOperation_type("selectID");
+			request.setTarget("car");
+			request.setObj(Integer.toString(car.getId()));
+    		
+    		
+    		//client.startConnection(SERVER_ADDRESS, SERVER_PORT);
+    		
+    		Response resp= new Response();
+    		
+    			
+    		resp = communication.sendMessage(request);
+    		ArrayList<String> info = resp.getValues();
+    		 if (info.isEmpty()) { 
+    			 System.out.println("this car isn't registred in the city");
+    			 
+    		 }else {
+		
+    		
+    		boolean end = true;
 			while (end== true) {
 				
 				if (bollard.isWay()== false && car.getIsInTheCity()==true ) {	// part that treat the cars that go out the city 
@@ -128,7 +147,7 @@ public class SensorOperation {
 						Request req = new Request();
 						car.setIsInTheCity(true);
 						req.setObj(converter.CarToJson(car));
-						req.setOperation_type("insert");
+						req.setOperation_type("update");
 						req.setTarget("car");
 						req.setSource("client");
 						
@@ -136,6 +155,7 @@ public class SensorOperation {
 						System.out.println("vehicle added to the city"); 
 						bollard.setState(false);	
 						}
+					
 					else {
 						
 						System.out.println("vehicle not added to the city "); 
@@ -146,7 +166,8 @@ public class SensorOperation {
 					}
 				
 			}
-						communication.stopConnection();
+    		 }
+						
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

@@ -40,6 +40,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.awt.Color;
 import java.awt.SystemColor;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
 
 /**
  *
@@ -88,14 +90,16 @@ public class Frame1 extends javax.swing.JFrame {
 		tblBollard = new javax.swing.JTable();
 		btnSave = new javax.swing.JButton();
 		btnSave.setFont(new Font("Tahoma", Font.BOLD, 11));
-		btnSave.setBackground(new Color(0, 0, 128));
-		btnSave.setForeground(new Color(0, 0, 128));
+		btnSave.setBackground(new Color(0, 0, 205));
+		btnSave.setForeground(Color.BLACK);
 		btnUpdate = new javax.swing.JButton();
-		btnUpdate.setForeground(new Color(0, 0, 128));
-		btnUpdate.setBackground(new Color(0, 0, 128));
+		btnUpdate.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnUpdate.setForeground(Color.BLACK);
+		btnUpdate.setBackground(new Color(0, 0, 205));
 		btnDelete1 = new javax.swing.JButton();
-		btnDelete1.setForeground(new Color(0, 0, 128));
-		btnDelete1.setBackground(new Color(0, 0, 128));
+		btnDelete1.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnDelete1.setForeground(Color.BLACK);
+		btnDelete1.setBackground(new Color(0, 0, 205));
 		jLabel6 = new javax.swing.JLabel();
 		jLabel6.setForeground(new Color(128, 0, 0));
 
@@ -152,7 +156,7 @@ public class Frame1 extends javax.swing.JFrame {
 		});
 
 		btnUpdate.setText("Update");
-		btnUpdate.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		btnUpdate.setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
 		btnUpdate.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				try {
@@ -197,6 +201,8 @@ public class Frame1 extends javax.swing.JFrame {
 		lblIsactive.setFont(new Font("Yu Gothic Medium", Font.BOLD, 13));
 
 		JButton btnRetour = new JButton("Retour");
+		btnRetour.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnRetour.setBackground(new Color(255, 255, 255));
 		btnRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);

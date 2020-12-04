@@ -25,7 +25,7 @@ public class CommunicationWithServer {
 	
 	public CommunicationWithServer() {
 		serveconfig.initServer();
-		SERVER_PORT_AQS = Integer.parseInt(serveconfig.getProperty("serverportAQS"));
+		//SERVER_PORT_AQS = Integer.parseInt(serveconfig.getProperty("serverportAQS"));
 		SERVER_PORT_CLIENT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
 		SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
 	}

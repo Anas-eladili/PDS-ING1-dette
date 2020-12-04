@@ -109,14 +109,14 @@ public class Frame2 extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblBollard = new javax.swing.JTable();
         btnSave = new javax.swing.JButton();
-        btnSave.setBackground(new Color(0, 0, 128));
-        btnSave.setForeground(new Color(0, 0, 128));
+        btnSave.setBackground(new Color(0, 0, 205));
+        btnSave.setForeground(new Color(0, 0, 0));
         btnUpdate = new javax.swing.JButton();
-        btnUpdate.setForeground(new Color(0, 0, 128));
-        btnUpdate.setBackground(new Color(0, 0, 128));
+        btnUpdate.setForeground(new Color(0, 0, 0));
+        btnUpdate.setBackground(new Color(0, 0, 205));
         btnDelete1 = new javax.swing.JButton();
-        btnDelete1.setForeground(new Color(0, 0, 128));
-        btnDelete1.setBackground(new Color(0, 0, 128));
+        btnDelete1.setForeground(new Color(0, 0, 0));
+        btnDelete1.setBackground(new Color(0, 0, 205));
         jLabel6 = new javax.swing.JLabel();
         jLabel6.setForeground(new Color(128, 0, 0));
 
@@ -213,6 +213,9 @@ public class Frame2 extends javax.swing.JFrame {
         txtWay.setColumns(10);
         
         JButton btnRetour = new JButton("Retour");
+        btnRetour.setForeground(new Color(0, 0, 0));
+        btnRetour.setBackground(new Color(255, 255, 255));
+        btnRetour.setFont(new Font("Tahoma", Font.BOLD, 12));
         btnRetour.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		setVisible(false);
@@ -233,7 +236,7 @@ public class Frame2 extends javax.swing.JFrame {
         layout.setHorizontalGroup(
         	layout.createParallelGroup(Alignment.TRAILING)
         		.addGroup(layout.createSequentialGroup()
-        			.addGroup(layout.createParallelGroup(Alignment.LEADING)
+        			.addGroup(layout.createParallelGroup(Alignment.TRAILING)
         				.addGroup(layout.createSequentialGroup()
         					.addGap(78)
         					.addGroup(layout.createParallelGroup(Alignment.LEADING)
@@ -244,7 +247,7 @@ public class Frame2 extends javax.swing.JFrame {
         						.addComponent(txtWay, Alignment.LEADING)
         						.addComponent(txtId, Alignment.LEADING, 188, 188, Short.MAX_VALUE))
         					.addPreferredGap(ComponentPlacement.RELATED, 48, Short.MAX_VALUE))
-        				.addGroup(Alignment.TRAILING, layout.createSequentialGroup()
+        				.addGroup(layout.createSequentialGroup()
         					.addContainerGap()
         					.addComponent(btnSave, GroupLayout.PREFERRED_SIZE, 72, GroupLayout.PREFERRED_SIZE)
         					.addGap(33)))
@@ -256,9 +259,9 @@ public class Frame2 extends javax.swing.JFrame {
         					.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
         					.addGap(51)
         					.addComponent(btnDelete1, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-        					.addGap(185)
+        					.addGap(158)
         					.addComponent(btnRetour, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-        					.addContainerGap())))
+        					.addGap(37))))
         		.addGroup(layout.createSequentialGroup()
         			.addContainerGap(503, Short.MAX_VALUE)
         			.addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 137, GroupLayout.PREFERRED_SIZE)
@@ -287,9 +290,12 @@ public class Frame2 extends javax.swing.JFrame {
         			.addGroup(layout.createParallelGroup(Alignment.BASELINE)
         				.addComponent(btnDelete1, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
         				.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-        				.addComponent(btnRetour, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
         				.addComponent(btnSave, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
         			.addContainerGap(73, Short.MAX_VALUE))
+        		.addGroup(Alignment.TRAILING, layout.createSequentialGroup()
+        			.addContainerGap(372, Short.MAX_VALUE)
+        			.addComponent(btnRetour, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+        			.addGap(63))
         );
         getContentPane().setLayout(layout);
 

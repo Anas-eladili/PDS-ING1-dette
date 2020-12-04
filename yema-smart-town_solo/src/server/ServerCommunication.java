@@ -16,6 +16,7 @@ import common.ConvertJSON;
 import common.Request;
 import common.Response;
 import connection.DataSource;
+import server.dao.CarDAO;
 import server.dao.Factory;
 import server.dao.infotrafficDAO;
 
@@ -266,7 +267,18 @@ public class ServerCommunication {
 								out.println(jsonResponse);
 							
 							
-						}if (req.getOperation_type().equals("selectnbmax")) {
+						}if (req.getOperation_type().equals("selectincity")) {
+							CarDAO dao = new CarDAO();
+							ArrayList<String> result = dao.selectincity(connection);
+							resp.setResponse_type("selectincity");
+							resp.setResponse_state(true);
+							resp.setValues(result);
+
+							jsonResponse = converter.ResponseToJson(resp); System.out.println(jsonResponse);
+							out.println(jsonResponse);
+						
+						
+					}if (req.getOperation_type().equals("selectnbmax")) {
 							infotrafficDAO dao = new infotrafficDAO();
 							ArrayList<String> result = dao.selectnbmax(connection);
 							resp.setResponse_type("selectnbmax");

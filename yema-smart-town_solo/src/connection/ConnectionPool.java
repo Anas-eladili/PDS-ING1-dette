@@ -48,7 +48,7 @@ public class ConnectionPool {
 			//System.out.println(" max pool size reached");		
 			if(!connections.isEmpty()) {Connection tempConnection = connections.get(0);
 			// usedconnections.add(tempConnection);
-			System.out.println(" nb connexions crées:" + connections.size());
+			//System.out.println(" nb connexions crées:" + connections.size());
 			connections.remove(0);
 			
 			return tempConnection;
@@ -59,9 +59,9 @@ public class ConnectionPool {
 		// nombre = connections.size();
 		Connection tempConnection = connections.get(0);
 		// usedconnections.add(tempConnection);
-		System.out.println(" nb connexions crées:" + connections.size());
+		//System.out.println(" nb connexions crées:" + connections.size());
 		connections.remove(0);
-		if(connections.isEmpty()) {System.out.println(" max pool size reached ");}
+		//if(connections.isEmpty()) {System.out.println(" max pool size reached ");}
 
 		return tempConnection;
 	}

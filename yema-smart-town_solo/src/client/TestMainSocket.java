@@ -304,14 +304,14 @@ public class TestMainSocket {
 						 
 						 
 						 bollard.setId(1);
-						 SensorOperation operation =new  SensorOperation();
+						 SensorOperation operation =new  SensorOperation(null);
 						 Car car =new Car();
 						 System.out.println("id : ");
 						id = enter3.nextInt();
 						car.setId(id);
 						 car.setId(11);
 						 car.setIsInTheCity(false);
-						 operation.start(bollard,car);
+						 operation.start(bollard,car,client);
 						 System.out.println("good");}
 					
 					

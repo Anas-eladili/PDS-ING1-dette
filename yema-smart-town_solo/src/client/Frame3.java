@@ -13,10 +13,12 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import business.SensorOperation;
 import common.ConvertJSON;
 
 import common.Request;
 import common.Response;
+import common.business.Car;
 import common.business.RetractableBollard;
 import common.business.infotraffic;
 import common.*;
@@ -90,12 +92,14 @@ public class Frame3 extends javax.swing.JFrame {
 		btnSave = new javax.swing.JButton();
 		btnSave.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnSave.setBackground(new Color(0, 0, 128));
-		btnSave.setForeground(new Color(0, 0, 128));
+		btnSave.setForeground(new Color(0, 0, 0));
 		btnUpdate = new javax.swing.JButton();
-		btnUpdate.setForeground(new Color(0, 0, 128));
+		btnUpdate.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnUpdate.setForeground(new Color(0, 0, 0));
 		btnUpdate.setBackground(new Color(0, 0, 128));
 		btnDelete1 = new javax.swing.JButton();
-		btnDelete1.setForeground(new Color(0, 0, 128));
+		btnDelete1.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnDelete1.setForeground(new Color(0, 0, 0));
 		btnDelete1.setBackground(new Color(0, 0, 128));
 		jLabel6 = new javax.swing.JLabel();
 		jLabel6.setForeground(new Color(128, 0, 0));
@@ -110,7 +114,7 @@ public class Frame3 extends javax.swing.JFrame {
 		jLabel2.setFont(new Font("Yu Gothic Medium", Font.BOLD, 13)); // NOI18N
 		jLabel2.setText("AlertAirQuality");
 
-		jLabel6.setFont(new Font("Yu Gothic Medium", Font.BOLD, 16)); // NOI18N
+		jLabel6.setFont(new Font("Yu Gothic Medium", Font.BOLD, 20)); // NOI18N
 		jLabel6.setText("Simulation Settings");
 
 		tblBollard.setModel(
@@ -192,6 +196,9 @@ public class Frame3 extends javax.swing.JFrame {
 		lblIsactive.setFont(new Font("Yu Gothic Medium", Font.BOLD, 13));
 
 		JButton btnRetour = new JButton("Retour");
+		btnRetour.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnRetour.setForeground(new Color(0, 0, 0));
+		btnRetour.setBackground(new Color(255, 255, 255));
 		btnRetour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
@@ -210,61 +217,94 @@ public class Frame3 extends javax.swing.JFrame {
 		});
 		
 		lblIdBollard = new JLabel("id Bollard");
+		lblIdBollard.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
 		lblWayOfBollard = new JLabel("Way of bollard ");
+		lblWayOfBollard.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
 		lblCarId = new JLabel("Car id ");
+		lblCarId.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
 		lblCarLocation = new JLabel("Car location");
+		lblCarLocation.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
-		textField = new JTextField();
-		textField.setColumns(10);
+		txtidBollard = new JTextField();
+		txtidBollard.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
+		testWayBollard = new JTextField();
+		testWayBollard.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
+		textIdCar = new JTextField();
+		textIdCar.setColumns(10);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
+		textCarLocation = new JTextField();
+		textCarLocation.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Launch simulation");
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				try {
+					btnSimulationActionPerformed(evt);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			
+		});
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		layout.setHorizontalGroup(
 			layout.createParallelGroup(Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup()
-					.addContainerGap(810, Short.MAX_VALUE)
+					.addContainerGap(429, Short.MAX_VALUE)
+					.addComponent(btnNewButton)
+					.addGap(252)
 					.addComponent(btnRetour, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
 					.addGap(42))
 				.addGroup(layout.createSequentialGroup()
-					.addContainerGap(449, Short.MAX_VALUE)
-					.addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 229, GroupLayout.PREFERRED_SIZE)
-					.addGap(265))
+					.addGap(363)
+					.addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 249, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(359, Short.MAX_VALUE))
 				.addGroup(layout.createSequentialGroup()
 					.addGap(78)
 					.addGroup(layout.createParallelGroup(Alignment.LEADING)
 						.addGroup(layout.createSequentialGroup()
-							.addGroup(layout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblIsactive)
-								.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
-								.addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
+							.addComponent(lblCarLocation)
+							.addContainerGap())
+						.addGroup(layout.createSequentialGroup()
 							.addGroup(layout.createParallelGroup(Alignment.LEADING)
 								.addGroup(layout.createSequentialGroup()
-									.addGap(1)
+									.addGroup(layout.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblIsactive)
+										.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+										.addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
 									.addGroup(layout.createParallelGroup(Alignment.LEADING)
 										.addGroup(layout.createSequentialGroup()
-											.addGap(16)
-											.addComponent(txtId, 188, 188, 188))
+											.addGap(1)
+											.addGroup(layout.createParallelGroup(Alignment.LEADING)
+												.addGroup(layout.createSequentialGroup()
+													.addGap(16)
+													.addComponent(txtId, 188, 188, 188))
+												.addGroup(layout.createSequentialGroup()
+													.addGap(17)
+													.addComponent(txtAlert, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE))))
 										.addGroup(layout.createSequentialGroup()
-											.addGap(17)
-											.addComponent(txtAlert, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE))))
+											.addGap(18)
+											.addComponent(txtNbMax, GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))))
 								.addGroup(layout.createSequentialGroup()
+									.addGroup(layout.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblWayOfBollard)
+										.addComponent(lblIdBollard, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblCarId))
 									.addGap(18)
-									.addGroup(layout.createParallelGroup(Alignment.LEADING)
-										.addComponent(txtNbMax, GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
-										.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+									.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+										.addComponent(testWayBollard, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+										.addComponent(txtidBollard, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+										.addComponent(textIdCar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+										.addComponent(textCarLocation, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE))))
 							.addGap(177)
 							.addGroup(layout.createParallelGroup(Alignment.TRAILING)
 								.addGroup(layout.createSequentialGroup()
@@ -277,31 +317,13 @@ public class Frame3 extends javax.swing.JFrame {
 									.addGap(60))
 								.addGroup(layout.createSequentialGroup()
 									.addComponent(btnDelete1, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-									.addGap(93))))
-						.addGroup(layout.createSequentialGroup()
-							.addComponent(lblIdBollard, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
-						.addGroup(layout.createSequentialGroup()
-							.addGroup(layout.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblWayOfBollard)
-								.addComponent(lblCarId)
-								.addComponent(lblCarLocation))
-							.addGap(18)
-							.addGroup(layout.createParallelGroup(Alignment.LEADING)
-								.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-							.addGap(688))))
-				.addGroup(layout.createSequentialGroup()
-					.addGap(424)
-					.addComponent(btnNewButton)
-					.addContainerGap(430, Short.MAX_VALUE))
+									.addGap(93))))))
 		);
 		layout.setVerticalGroup(
 			layout.createParallelGroup(Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup()
-					.addGap(29)
-					.addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 34, GroupLayout.PREFERRED_SIZE)
+					.addGap(23)
+					.addComponent(jLabel6, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 					.addGap(3)
 					.addGroup(layout.createParallelGroup(Alignment.LEADING, false)
 						.addGroup(layout.createSequentialGroup()
@@ -325,32 +347,35 @@ public class Frame3 extends javax.swing.JFrame {
 							.addGap(35)
 							.addGroup(layout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblIdBollard)
-								.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+								.addComponent(txtidBollard, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addGap(18)
 							.addGroup(layout.createParallelGroup(Alignment.LEADING)
 								.addGroup(layout.createSequentialGroup()
-									.addComponent(lblWayOfBollard)
-									.addGap(29)
-									.addComponent(lblCarId)
-									.addGap(30)
 									.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-										.addComponent(lblCarLocation)
-										.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-								.addGroup(layout.createSequentialGroup()
-									.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblWayOfBollard)
+										.addComponent(testWayBollard, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 									.addGap(18)
-									.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-							.addGap(125))
+									.addComponent(lblCarId))
+								.addGroup(layout.createSequentialGroup()
+									.addGap(38)
+									.addComponent(textIdCar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addGap(18)
+							.addGroup(layout.createParallelGroup(Alignment.LEADING)
+								.addComponent(textCarLocation, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblCarLocation)))
 						.addGroup(layout.createSequentialGroup()
 							.addGroup(layout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(btnDelete1, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnSave, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnUpdate, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE))
-							.addPreferredGap(ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
-							.addComponent(btnNewButton)
-							.addGap(14)
-							.addComponent(btnRetour, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
-							.addGap(44))))
+							.addPreferredGap(ComponentPlacement.RELATED, 190, Short.MAX_VALUE)
+							.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+								.addGroup(layout.createSequentialGroup()
+									.addComponent(btnRetour, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)
+									.addGap(44))
+								.addGroup(layout.createSequentialGroup()
+									.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 49, GroupLayout.PREFERRED_SIZE)
+									.addGap(59))))))
 		);
 		getContentPane().setLayout(layout);
 
@@ -420,10 +445,40 @@ public class Frame3 extends javax.swing.JFrame {
 	}
 
 	// GEN-LAST:event_btnSaveActionPerformed
-
+	private void btnSimulationActionPerformed(java.awt.event.ActionEvent evt) throws IOException {// GEN-FIRST:event_btnSimulationActionPerformed
+		// TODO add your handling code here:
+		Integer idBollard = Integer.parseInt(txtidBollard.getText());
+		Integer idCar = Integer.parseInt(textIdCar.getText());
+		Boolean BollardWay = Boolean.parseBoolean(testWayBollard.getText());
+		Boolean CarLocation = Boolean.parseBoolean(textCarLocation.getText());
+		
+		if ( !BollardWay.toString().isEmpty() && !CarLocation.toString().isEmpty()&& !idCar.toString(idCar).isEmpty()   && !idBollard.toString(idBollard).isEmpty() ){
+			
+			RetractableBollard bollard = new RetractableBollard();
+			 SensorOperation operation =new  SensorOperation(client);
+			Car car =new Car();
+			car.setId(idCar);
+			bollard.setId(idBollard);
+			car.setIsInTheCity(CarLocation);
+			   bollard.setWay(BollardWay);
+			
+			
+			
+			try {
+				operation.start(bollard,car, client);
+				 
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		alert("Bollard operation sucess");
+		
+	}
 	private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) throws IOException {// GEN-FIRST:event_btnUpdateActionPerformed
 		// TODO add your handling code here:
-		Integer id = Integer.parseInt(txtId.getText()); // txtId.getText().trim();
+		Integer id = Integer.parseInt(txtId.getText()); 
 		Boolean Alert = Boolean.parseBoolean(txtAlert.getText());
 		Integer NbMax = Integer.parseInt(txtNbMax.getText());
 
@@ -726,8 +781,8 @@ public class Frame3 extends javax.swing.JFrame {
 	private JLabel lblWayOfBollard;
 	private JLabel lblCarId;
 	private JLabel lblCarLocation;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField txtidBollard;
+	private JTextField testWayBollard;
+	private JTextField textIdCar;
+	private JTextField textCarLocation;
 }
