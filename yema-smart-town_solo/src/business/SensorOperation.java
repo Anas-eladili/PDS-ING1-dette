@@ -52,7 +52,7 @@ public class SensorOperation {
 
 	public synchronized void carexit(Car car ,CommunicationWithServer communication) throws IOException {
 		 Request request3= new Request();
-		 request3.setOperation_type("delete");
+		 request3.setOperation_type("update");
 		 request3.setTarget("car"); 
 		 request3.setSource("client");  
 		 

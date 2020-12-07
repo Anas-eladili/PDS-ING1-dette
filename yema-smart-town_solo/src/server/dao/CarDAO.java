@@ -127,8 +127,8 @@ try {
 			ResultSet result = myRequest.executeQuery("SELECT * FROM car where isInTheCity = true  ");
 			
 			while(result.next()) {
-				Car car = new Car();
 				
+				Car car = new Car();
 				car.setId(result.getInt(1));
 				car.setIsInTheCity(result.getBoolean(2));
 				

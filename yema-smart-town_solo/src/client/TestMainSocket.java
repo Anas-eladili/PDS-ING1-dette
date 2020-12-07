@@ -14,7 +14,7 @@ import common.business.Car;
 import common.business.RetractableBollard;
 import common.business.VehicleSensor;
 import common.business.infotraffic;
-import connection.DataSource;
+
 import connection.ConnectionPool;
 import connection.PropertiesFileReader;
 
@@ -28,7 +28,7 @@ public class TestMainSocket {
 		serveconfig.initServer();
 		final int SERVER_PORT = Integer.parseInt(serveconfig.getProperty("serverportClient"));
 		final String SERVER_ADDRESS = serveconfig.getProperty("serveraddress");
-		ClientCommunication client = new ClientCommunication();
+		CommunicationWithServer client = new CommunicationWithServer();
 		client.startConnection(SERVER_ADDRESS, SERVER_PORT);
 		
 		try {
@@ -333,7 +333,7 @@ public class TestMainSocket {
 						 request1.setSource("client");
 						 
 						
-						ArrayList<String> list = client.sendMessageresp(request1).getValues();
+						ArrayList<String> list = client.sendMessage(request1).getValues();
 						System.out.println(list.get(0));
 						
 										
@@ -417,7 +417,7 @@ public class TestMainSocket {
 						 request3.setOperation_type("selectalert");
 						 request3.setTarget("infotraffic"); 
 						 request3.setSource("client");                                               //code pour savoir alert ou pas 
-						 ArrayList<String> list = client.sendMessageresp(request3).getValues();
+						 ArrayList<String> list = client.sendMessage(request3).getValues();
 						 System.out.println(list.get(0));
 					}
 					

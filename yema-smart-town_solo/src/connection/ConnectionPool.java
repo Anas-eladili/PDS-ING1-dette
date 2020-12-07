@@ -10,7 +10,7 @@ public class ConnectionPool {
 	private Connection myConnection;
 	private PropertiesFileReader file = new PropertiesFileReader();
 	// private ArrayList<Connection> usedconnections = new ArrayList<Connection>();
-	// private int sizeMax = Integer.valueOf(System.getProperty("my.prop"));
+    //private int sizeMax = Integer.valueOf(System.getProperty("my.prop"));
 
 	public ConnectionPool() {
 		try {
@@ -20,7 +20,7 @@ public class ConnectionPool {
 			Class.forName(driver);
 			// nombre +=1;
 
-			for (int i = 0; i<3 ; i++) {
+			for (int i = 0; i < 5 ; i++) {
 				myConnection = DriverManager.getConnection(file.getProperty("url"), file.getProperty("id"),
 						file.getProperty("password"));
 				connections.add(myConnection);

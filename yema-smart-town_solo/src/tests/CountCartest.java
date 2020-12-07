@@ -37,7 +37,7 @@ public class CountCartest {
 			LOGGER.log(Level.WARNING, "Erreur de connexion client");
 		}
 		Request request2= new Request();
-		 request2.setOperation_type("select");
+		 request2.setOperation_type("selectincity");
 		 request2.setTarget("car"); 
 		 request2.setSource("client");                                                //code pour savoir nb de vehicule 
 		 

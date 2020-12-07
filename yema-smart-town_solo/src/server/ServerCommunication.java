@@ -15,31 +15,28 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import common.ConvertJSON;
 import common.Request;
 import common.Response;
-import connection.DataSource;
+import connection.ConnectionPool;
 import server.dao.CarDAO;
 import server.dao.Factory;
 import server.dao.infotrafficDAO;
 
 
 public class ServerCommunication {
-	protected static DataSource source;
+	protected  ConnectionPool connexion;
 
 	/**
 	 * start establish the connection with clients and sensors
 	 * The server is pending a new client or sensor with two threads (for each port)
 	 */
 	public void start(int portClient) throws IOException {
-		source = new DataSource();
+		ConnectionPool source = new ConnectionPool();
 
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException ex) {}
 		new ThreadClient(portClient).start();
 		//new ThreadSensor(portSensor).start();
 	}
 	@SuppressWarnings("deprecation")
 	public void stop(int portClient, int portSensor) throws IOException {
-		source = new DataSource();
+		//source = new DataSource();
 
 		try {
 			Thread.sleep(3000);
@@ -59,61 +56,36 @@ public class ServerCommunication {
 	private static class ThreadClient extends Thread {
 		private ServerSocket serverSocketClient;
 		private int portClient;
-		Connection connection ;
+		
+		ConnectionPool source = new ConnectionPool();
 		public ThreadClient(int portClient) {
 			this.portClient = portClient;
 		}
 		public void run() {
+			Connection connection;
 			try {
 				serverSocketClient = new ServerSocket(portClient);
 				System.out.println("Serveur à l'écoute des clients");
 				
 				while (true) {
 					//Socket client = serverSocketClient.accept();
-					 connection = source.giveConnection();
-					new CommonThread(serverSocketClient.accept(),connection ).start();
-					DataSource.returnConnection(connection);
-					
+					connection = source.giveConnection();
+					new CommonThread(serverSocketClient.accept(),connection).start();
+				
+					source.returnConnection(connection);
 					
 					
 				}
 			} catch (IOException | InterruptedException e1) {
-				source.closeAllConnection();
-				
+				//DataSource.returnConnection(connection);
+							
 				e1.printStackTrace();
 			}
-			DataSource.returnConnection(connection);
+			
 		}
 	}
 
-	/**
-	 * 
-	 * @author anas
-	 * this thread create a new socket which is pending a new sensor on the sensor port
-	 */
-	/*private static class ThreadSensor extends Thread {
-		private ServerSocket serverSocketSensor;
-		private int portSensor;
-
-		public ThreadSensor(int portSensor) {
-			this.portSensor = portSensor;
-		}
-
-		public void run() {
-			try {
-				serverSocketSensor = new ServerSocket(portSensor);
-				System.out.println("Serveur à l'écoute des capteurs");
-				while (true) {
-					Connection connection = source.giveConnection();
-					new CommonThread(serverSocketSensor.accept(),connection ).start();
-					DataSource.returnConnection(connection);
-				} 
-			} catch (IOException | InterruptedException e) {
-				source.closeAllConnection();
-				e.printStackTrace();
-			}
-		}
-	}*/
+	
 
 
 	/**
@@ -297,7 +269,7 @@ public class ServerCommunication {
 
                 								}
 					System.out.println("------ END of communication -------");
-					//DataSource.returnConnection(connection);
+					
 					;
 
 
@@ -305,12 +277,12 @@ public class ServerCommunication {
 					out.close();
 					clientSocket.close();
 					
-					CommonThread.currentThread().interrupt(); 
+					
 					System.out.println("Thread was interrupted");
 				} catch (IOException e) {}	
-			} //end while 
+			} 
 			running.set(true);
-			//source.returnConnection(connection);
+			CommonThread.currentThread().interrupt(); 
 
 		}
 			
