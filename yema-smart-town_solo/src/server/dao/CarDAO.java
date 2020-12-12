@@ -171,6 +171,12 @@ try {
 			e.printStackTrace();
 			return list;
 	}
+	}
+
+	@Override
+	public boolean updatenb(String obj, Connection connection) {
+		// TODO Auto-generated method stub
+		return false;
 	}}
 
 

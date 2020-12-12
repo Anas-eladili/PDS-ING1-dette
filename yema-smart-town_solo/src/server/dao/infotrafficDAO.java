@@ -23,11 +23,11 @@ public class infotrafficDAO extends DAO<infotraffic>{
 		infotraffic info = converter.JsonToinfotraffic(device);
 
 		try {
-			preparedStatement = connection.prepareStatement("INSERT INTO infotraffic(id, alert, nbmaxcar) VALUES(?, ?,?)");
+			preparedStatement = connection.prepareStatement("INSERT INTO infotraffic(id, alert, nbmaxcar, nbactuel) VALUES(?, ?,?,?)");
 			preparedStatement.setInt(1, info.getId());
 			preparedStatement.setBoolean(2, info.getAlert());
 			preparedStatement.setInt(3, info.getNbmaxcar());
-			
+			preparedStatement.setInt(4, info.getNbactuel());
 			preparedStatement.executeUpdate();
 			
 			return true; 	
@@ -48,6 +48,7 @@ try {
 			preparedStatement = connection.prepareStatement("DELETE FROM infotraffic WHERE id = ?");
 			
 			preparedStatement.setInt(1, info.getId());
+			
 			preparedStatement.executeUpdate();
 			
 			return true;
@@ -61,11 +62,32 @@ try {
 		PreparedStatement preparedStatement = null;
 		infotraffic info = converter.JsonToinfotraffic(device);
 		try {
-			preparedStatement = connection.prepareStatement("UPDATE infotraffic SET alert = ?, nbmaxcar = ?  WHERE id = ?");
+			preparedStatement = connection.prepareStatement("UPDATE infotraffic SET alert = ?, nbmaxcar = ?, nbactuel = ? WHERE id = ?");
 			preparedStatement.setBoolean(1, info.getAlert());
 			
 			preparedStatement.setInt(2, info.getNbmaxcar());
-			preparedStatement.setInt(3, info.getId());
+			preparedStatement.setInt(4, info.getId());
+			
+			preparedStatement.setInt(3, info.getNbactuel());
+			
+			
+			
+			preparedStatement.executeUpdate();
+			
+			return true;
+		} catch (SQLException e) {e.printStackTrace();}
+			
+		return false;
+	}
+	public boolean updatenb(String device, Connection connection) {
+		PreparedStatement preparedStatement = null;
+		infotraffic info = converter.JsonToinfotraffic(device);
+		try {
+			preparedStatement = connection.prepareStatement("UPDATE infotraffic SET  nbactuel = ? WHERE id = ?");
+		
+			preparedStatement.setInt(2, info.getId());
+			
+			preparedStatement.setInt(1, info.getNbactuel());
 			
 			
 			
@@ -95,6 +117,7 @@ try {
 				
 				bollard.setAlert(result.getBoolean(2));
 				bollard.setNbmaxcar(result.getInt(3));
+				bollard.setNbactuel(result.getInt(4));
 				
 
 
@@ -122,6 +145,8 @@ try {
 				info.setId(result.getInt(1));
 				info.setAlert(result.getBoolean(2));
 				info.setNbmaxcar(result.getInt(3));
+				info.setNbactuel(result.getInt(4));
+				
 				
 				
 				String json = converter.infotrafficToJson(info);
@@ -148,6 +173,33 @@ try {
 				
 				
 				String json = String.valueOf(nbmaxcar);
+				list.add(json);
+			}
+			
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return list;
+		
+		
+	}
+		
+
+}
+	public ArrayList<String> selectnbactuel(Connection connection) {
+		// TODO Auto-generated method stub
+		ArrayList<String> list = new ArrayList<String>();
+		try {
+			Statement myRequest = connection.createStatement();
+			ResultSet result = myRequest.executeQuery("SELECT nbactuel FROM infotraffic");
+			
+			while(result.next()) {
+				int nbactuel = result.getInt("nbactuel") ;
+				
+				// info.setNbmaxcar(result.getInt(1));
+				
+				
+				String json = String.valueOf(nbactuel);
 				list.add(json);
 			}
 			

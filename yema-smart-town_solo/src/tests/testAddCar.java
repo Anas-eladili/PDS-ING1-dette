@@ -17,6 +17,7 @@ import common.ConvertJSON;
 import common.Request;
 import common.YamlFileReader;
 import common.business.Car;
+import common.business.infotraffic;
 import connection.PropertiesFileReader;
 
 public class testAddCar {
@@ -38,21 +39,23 @@ public class testAddCar {
 			ex.printStackTrace();
 			LOGGER.log(Level.WARNING, "Erreur de connexion client");
 		}
-		Yaml yaml = new Yaml(new Constructor(Car.class));
+		/*Yaml yaml = new Yaml(new Constructor(Car.class));
 	
 		InputStream inputStream = yaml.getClass().getClassLoader().getResourceAsStream("ressources/AddCartest.yaml");
-		Car car = (Car) yaml.load(inputStream);
+		Car car = (Car) yaml.load(inputStream);*/
 		ConvertJSON converter = new ConvertJSON();
-		
+		infotraffic info = new infotraffic();
+		info.setId(1);
+		info.setNbactuel(3);
 		
 		Request req = new Request();
-		req.setObj(converter.CarToJson(car));
+		req.setObj(converter.infotrafficToJson(info));
 		
 		
 		
 		
-		req.setOperation_type("insert");
-		req.setTarget("car");
+		req.setOperation_type("updatenb");
+		req.setTarget("infotraffic");
 		req.setSource("clienttest");
 		
 		client.sendMessage(req); 

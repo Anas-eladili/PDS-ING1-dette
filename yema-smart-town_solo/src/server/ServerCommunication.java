@@ -260,6 +260,29 @@ public class ServerCommunication {
 							jsonResponse = converter.ResponseToJson(resp); System.out.println(jsonResponse);
 							out.println(jsonResponse);
 						}
+					
+					if (req.getOperation_type().equals("selectnbactuel")) {
+						infotrafficDAO dao = new infotrafficDAO();
+						ArrayList<String> result = dao.selectnbactuel(connection);
+						resp.setResponse_type("selectnbactuel");
+						resp.setResponse_state(true);
+						resp.setValues(result);
+
+						jsonResponse = converter.ResponseToJson(resp); System.out.println(jsonResponse);
+						out.println(jsonResponse);
+					}
+					if (req.getOperation_type().equals("updatenb")) {
+						//infotrafficDAO dao = new infotrafficDAO();
+						
+						
+						boolean result1 = factory.getData(req.getTarget()).updatenb(req.getObj() , connection);
+						resp.setResponse_type("updatenb");
+						resp.setResponse_state(result1);
+
+						jsonResponse = converter.ResponseToJson(resp); System.out.println(jsonResponse);
+						out.println(jsonResponse);
+					}
+					
 
 
 							

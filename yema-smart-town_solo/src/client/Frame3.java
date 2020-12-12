@@ -122,11 +122,11 @@ public class Frame3 extends javax.swing.JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"Id", "AlertAirQuality", "NbMaxVehicle"
+				"Id", "AlertAirQuality", "NbMaxVehicle", "nbactuel"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
-				Integer.class, Boolean.class, Integer.class
+				Integer.class, Boolean.class, Integer.class, Integer.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
@@ -254,6 +254,11 @@ public class Frame3 extends javax.swing.JFrame {
 			
 			
 		});
+		
+		JLabel lblNewLabel = new JLabel("Nb actuel");
+		
+		textnbactuel = new JTextField();
+		textnbactuel.setColumns(10);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		layout.setHorizontalGroup(
@@ -278,34 +283,41 @@ public class Frame3 extends javax.swing.JFrame {
 							.addGroup(layout.createParallelGroup(Alignment.LEADING)
 								.addGroup(layout.createSequentialGroup()
 									.addGroup(layout.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblIsactive)
-										.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
-										.addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
-									.addGroup(layout.createParallelGroup(Alignment.LEADING)
 										.addGroup(layout.createSequentialGroup()
-											.addGap(1)
+											.addGroup(layout.createParallelGroup(Alignment.LEADING)
+												.addComponent(lblIsactive)
+												.addComponent(jLabel1, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+												.addComponent(jLabel2, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
 											.addGroup(layout.createParallelGroup(Alignment.LEADING)
 												.addGroup(layout.createSequentialGroup()
-													.addGap(16)
-													.addComponent(txtId, 188, 188, 188))
+													.addGap(1)
+													.addGroup(layout.createParallelGroup(Alignment.LEADING)
+														.addGroup(layout.createSequentialGroup()
+															.addGap(16)
+															.addComponent(txtId, 188, 188, 188))
+														.addGroup(layout.createSequentialGroup()
+															.addGap(17)
+															.addComponent(txtAlert, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE))))
 												.addGroup(layout.createSequentialGroup()
-													.addGap(17)
-													.addComponent(txtAlert, GroupLayout.PREFERRED_SIZE, 188, GroupLayout.PREFERRED_SIZE))))
+													.addGap(18)
+													.addGroup(layout.createParallelGroup(Alignment.LEADING)
+														.addComponent(textnbactuel, GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+														.addComponent(txtNbMax, GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)))))
 										.addGroup(layout.createSequentialGroup()
+											.addGroup(layout.createParallelGroup(Alignment.LEADING)
+												.addComponent(lblWayOfBollard)
+												.addComponent(lblIdBollard, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
+												.addComponent(lblCarId))
 											.addGap(18)
-											.addComponent(txtNbMax, GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE))))
+											.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+												.addComponent(testWayBollard, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+												.addComponent(txtidBollard, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+												.addComponent(textIdCar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+												.addComponent(textCarLocation, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE))))
+									.addGap(177))
 								.addGroup(layout.createSequentialGroup()
-									.addGroup(layout.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblWayOfBollard)
-										.addComponent(lblIdBollard, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
-										.addComponent(lblCarId))
-									.addGap(18)
-									.addGroup(layout.createParallelGroup(Alignment.TRAILING)
-										.addComponent(testWayBollard, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
-										.addComponent(txtidBollard, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
-										.addComponent(textIdCar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
-										.addComponent(textCarLocation, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE))))
-							.addGap(177)
+									.addComponent(lblNewLabel)
+									.addPreferredGap(ComponentPlacement.RELATED)))
 							.addGroup(layout.createParallelGroup(Alignment.TRAILING)
 								.addGroup(layout.createSequentialGroup()
 									.addGroup(layout.createParallelGroup(Alignment.LEADING)
@@ -344,7 +356,11 @@ public class Frame3 extends javax.swing.JFrame {
 							.addGroup(layout.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblIsactive)
 								.addComponent(txtNbMax, GroupLayout.PREFERRED_SIZE, 25, GroupLayout.PREFERRED_SIZE))
-							.addGap(35)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addGroup(layout.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblNewLabel)
+								.addComponent(textnbactuel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addGap(7)
 							.addGroup(layout.createParallelGroup(Alignment.BASELINE)
 								.addComponent(lblIdBollard)
 								.addComponent(txtidBollard, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -388,7 +404,7 @@ public class Frame3 extends javax.swing.JFrame {
 		Integer id = Integer.parseInt(txtId.getText()); // txtId.getText().trim();
 		Boolean Alert = Boolean.parseBoolean(txtAlert.getText());
 		Integer NbMax = Integer.parseInt(txtNbMax.getText());
-		
+		Integer nbactuel = Integer.parseInt(textnbactuel.getText());
 
 		if (!Alert.toString().isEmpty()
 				&& !NbMax.toString(NbMax).isEmpty() && !id.toString(id).isEmpty()) {
@@ -417,12 +433,13 @@ public class Frame3 extends javax.swing.JFrame {
 
 				if (info.isEmpty()) {
 
-					saveUser(id, Alert, NbMax, client);
+					saveUser(id, Alert, NbMax,nbactuel, client);
 					DefaultTableModel model = (DefaultTableModel) tblBollard.getModel();
-					Object[] row = new Object[3];
+					Object[] row = new Object[4];
 					row[0] = id;
 					row[1] = Alert;
 					row[2] = NbMax;
+					row[3] = nbactuel;
 					
 					model.addRow(row);
 				} else {
@@ -465,7 +482,7 @@ public class Frame3 extends javax.swing.JFrame {
 			
 			
 			try {
-				operation.start(bollard,car, client);
+				operation.start(bollard,client, idCar);
 				 
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -473,6 +490,9 @@ public class Frame3 extends javax.swing.JFrame {
 			}
 			
 		}
+		DefaultTableModel model = (DefaultTableModel) tblBollard.getModel();
+		model.setRowCount(0);
+		fetch(client);
 		alert("Bollard operation sucess");
 		
 	}
@@ -481,7 +501,7 @@ public class Frame3 extends javax.swing.JFrame {
 		Integer id = Integer.parseInt(txtId.getText()); 
 		Boolean Alert = Boolean.parseBoolean(txtAlert.getText());
 		Integer NbMax = Integer.parseInt(txtNbMax.getText());
-
+		Integer nbactuel = Integer.parseInt(textnbactuel.getText());
 		if (!Alert.toString().isEmpty()
 				&& !NbMax.toString(NbMax).isEmpty() && !id.toString(id).isEmpty()) {
 			try {
@@ -508,7 +528,7 @@ public class Frame3 extends javax.swing.JFrame {
 				if (!info.isEmpty()) {
 					
 
-					update(id, Alert, NbMax, client);
+					update(id, Alert, NbMax,nbactuel, client);
 
 					DefaultTableModel model = (DefaultTableModel) tblBollard.getModel();
 					model.setRowCount(0);
@@ -537,6 +557,7 @@ public class Frame3 extends javax.swing.JFrame {
 		txtId.setText(model.getValueAt(i, 0).toString());
 		txtAlert.setText(model.getValueAt(i, 1).toString());
 		txtNbMax.setText(model.getValueAt(i, 2).toString());
+		textnbactuel.setText(model.getValueAt(i, 3).toString());
 		
 	}// GEN-LAST:event_tblStudentsMouseClicked
 
@@ -578,7 +599,7 @@ public class Frame3 extends javax.swing.JFrame {
 	}
 
 	// method to save user to the db
-	public void saveUser(Integer id, Boolean Alert, Integer NbMax,
+	public void saveUser(Integer id, Boolean Alert, Integer NbMax,Integer nbactuel,
 			CommunicationWithServer client) throws IOException {
 
 		
@@ -588,6 +609,7 @@ public class Frame3 extends javax.swing.JFrame {
 		bollard.setId(id);
 		bollard.setAlert(Alert);
 		bollard.setNbmaxcar(NbMax);
+		bollard.setNbactuel(nbactuel);
 		
 		req.setOperation_type("insert");
 		req.setTarget("infotraffic");
@@ -602,7 +624,7 @@ public class Frame3 extends javax.swing.JFrame {
 	}
 
 	// update the db
-	public void update(Integer id, Boolean Alert,Integer NbMax,
+	public void update(Integer id, Boolean Alert,Integer NbMax,Integer nbactuel,
 			CommunicationWithServer client) throws IOException {
 		try {
 
@@ -618,6 +640,7 @@ public class Frame3 extends javax.swing.JFrame {
 			bollard.setId(id);
 			bollard.setAlert(Alert);
 			bollard.setNbmaxcar(NbMax);
+			bollard.setNbactuel(nbactuel);
 			req1.setOperation_type("update");
 			req1.setTarget("infotraffic");
 			req1.setSource("client");
@@ -710,11 +733,11 @@ public class Frame3 extends javax.swing.JFrame {
 			DefaultTableModel model = (DefaultTableModel) tblBollard.getModel();
 			for (int i = 0; i < data.size(); i++) {
 
-				Object[] row = new Object[3];
+				Object[] row = new Object[4];
 				row[0] = data.get(i).getId();
 				row[1] = data.get(i).getAlert();
 				row[2] = data.get(i).getNbmaxcar();
-				
+				row[3] = data.get(i).getNbactuel();
 				model.addRow(row);
 			}
 
@@ -785,4 +808,5 @@ public class Frame3 extends javax.swing.JFrame {
 	private JTextField testWayBollard;
 	private JTextField textIdCar;
 	private JTextField textCarLocation;
+	private JTextField textnbactuel;
 }

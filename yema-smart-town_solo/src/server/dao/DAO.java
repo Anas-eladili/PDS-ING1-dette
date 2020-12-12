@@ -42,5 +42,9 @@ public abstract class DAO<T> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	public abstract boolean updatenb(String obj, Connection connection) ;
+		
+	
+	
 
 }
